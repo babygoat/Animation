@@ -1,0 +1,16 @@
+.modalstyle = {
+  background-color:white;
+  height: 100%;
+  position:relative;
+  margin:0 auto;
+  padding:3em;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  @media (min-width: 60em) {
+      height:75%;
+      margin:5% auto;
+      max-height: 57em;
+      max-width:66em;
+      width:85%;
+      }
+};

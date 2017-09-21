@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ModalControl from './components/modal'
 
 class App extends React.Component{
   constructor(props) {
@@ -10,7 +11,7 @@ class App extends React.Component{
   render(){
     return (
       <div>
-
+        <ModalControl />
       </div>
     );
   }
