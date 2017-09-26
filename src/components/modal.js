@@ -2,21 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-responsive-modal';
 import {modalStyle} from '../styles/css/modal.css'
+import PlayGround from './playground'
 
 export default class ModalControl extends React.Component {
   constructor(props) {
     super(props);
-    this.onOpenModal = this.onOpenModal.bind(this);
+    //this.onOpenModal = this.onOpenModal.bind(this);
     this.onCloseModal = this.onCloseModal.bind(this);
     this.state={
-      open: false,
+      open: true,
     };
   }
-
+  /*
   onOpenModal() {
     this.setState({ open: true });
   };
-
+  */
   onCloseModal() {
     this.setState({ open: false });
   };
@@ -26,8 +27,8 @@ export default class ModalControl extends React.Component {
 
     return (
       <div>
-        <button onClick={this.onOpenModal}>Open modal</button>
         <Modal open={open} onClose={this.onCloseModal} little closeOnOverlayClick={false} modalStyle={modalStyle}>
+          <PlayGround />
         </Modal>
       </div>
     );
