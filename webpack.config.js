@@ -1,12 +1,18 @@
 var path = require( 'path' );
 // 讓你可以動態插入 bundle 好的 .js 檔到 .index.html
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: `${__dirname}/src/index.html`,
   filename: 'index.html',
   inject: 'body',
 });
+
+const CopyWebpackPluginConfig = new CopyWebpackPlugin([{
+   from: 'src/assets',
+   to: 'assets'
+ }]);
 
 // entry 為進入點，output 為進行完 eslint、babel loader 轉譯後的檔案位置
 module.exports = {
@@ -51,5 +57,5 @@ module.exports = {
     inline: true,
     port: 8008,
   },
-  plugins: [HTMLWebpackPluginConfig],
+  plugins: [HTMLWebpackPluginConfig, CopyWebpackPluginConfig],
 };
