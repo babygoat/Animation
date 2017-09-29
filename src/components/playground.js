@@ -8,14 +8,23 @@ import {Keys, KeyAnimations, KeyMusicUrls} from '../utilities/config/keys.config
 export default class PlayGround extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { currentKey: '', currentAnimation: null };
+    this.state = { currentKey: '', currentAnimation: null, isMusicLoaded: false };
     this.initKeyboard = this.initKeyboard.bind(this);
     this.initMusics   = this.initMusics.bind(this);
     this.keyHandler   = this.keyHandler.bind(this);
+    this.onMusicLoaded = this.onMusicLoaded.bind(this);
+    this.onLoad = props.onLoad;
   }
 
   initMusics() {
-    this.musicHandler = new Players(KeyMusicUrls).toMaster();
+    this.musicHandler = new Players(KeyMusicUrls, this.onMusicLoaded).toMaster();
+  }
+
+  onMusicLoaded(){
+    this.onLoad();
+    this.setState({
+      isMusicLoaded: true,
+    });
   }
 
   initKeyboard() {
@@ -43,7 +52,13 @@ export default class PlayGround extends React.Component {
   componentDidMount() {
     this.initKeyboard();
     this.initMusics();
-    key.setScope('Animation');
+  }
+
+  componentWillUpdate(nextProps, nextState){
+    const isMusicLoaded = nextState.isMusicLoaded;
+    if(isMusicLoaded && 'Animation' != key.getScope()){
+      key.setScope('Animation');
+    }
   }
 
   componentWillUnmount() {
@@ -51,18 +66,19 @@ export default class PlayGround extends React.Component {
   }
 
   render() {
+    const onMusicLoaded = this.state.isMusicLoaded;
+
     const defaultOptions = {
       loop: false,
       autoplay: true,
       animationData: this.state.currentAnimation,
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
-      }
+      } 
     };
 
-    return (
+    return onMusicLoaded ? (
       <Animation options={defaultOptions}
-      />
-    );
+      />) : null;
   }
 }

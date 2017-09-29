@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ModalControl from './components/modal';
+import ModalControl from './components/modalcontrol';
 import MobileDetect from 'mobile-detect/mobile-detect.min.js';
 
 class App extends React.Component{

@@ -26,8 +26,22 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.gif/,
+        exclude: /(node_modules)/,
+        loader: "url-loader?limit=10000&mimetype=image/gif&name=assets/[hash].[ext]"
+      },
+      {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader' ]
+        use: [
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              module: true,
+              camelCase: true
+            },
+          },
+        ],
       },
       {
         enforce: 'pre',
