@@ -1,80 +1,97 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import bodymovin from 'bodymovin';
+import CSSTransition from 'react-transition-group/CSSTransition';
+import styles from '../styles/css/idle.css'
+import AnimationContainer from '../components/animationContainer';
+import {KeyAnimations} from '../utilities/config/keys.config.js';
 
 export default class Animation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onComplete = this.onComplete.bind(this);
+    this.updateTriggeredStatus = this.updateTriggeredStatus.bind(this);
+    this.node = null;
+    this.name = '';
+
+    const animationArr = KeyAnimations;
+
+    let triggeredArr = {};
+
+    Object.keys(animationArr).map((key) => (
+      animationArr[key].forEach((animationData,index,array) => {
+        let animationId = key+index.toString();
+        Object.assign(triggeredArr, { animationId: false} );
+      })
+    ));
+
+    this.state = {
+      triggered: triggeredArr,
+      currentPlaying: '',
+    }
+  }
 
   render() {
-    const lottieStyles = {
-      width: `${this.props.width}px` || '100%',
-      height: `${this.props.height}px` || '100%',
-      overflow: 'hidden',
-      margin: '0 auto'
-    };
+    const animationArr = KeyAnimations;
 
-    return <div ref='lavContainer' style={lottieStyles}></div>;
+    let containerArr = [];
+
+    Object.keys(animationArr).map((key) => (
+      animationArr[key].forEach((animationData,index,array) => {
+        let id = key+index.toString();
+        containerArr.push(
+          <AnimationContainer
+            key = {id}
+            name = {id}
+            triggered = {this.state.triggered[id]}
+            animationData = {animationData}
+            onComplete = {this.onComplete}
+          />
+        )
+      })
+    ));
+
+    return <div>
+            {containerArr}
+            <div id={styles.hint}>
+              <p className={styles.message}>Press Key A to M and turn up your speakers!</p>
+            </div>
+           </div>;
   }
 
-  componentDidMount() {
-    this.options = {
-      container: this.refs.lavContainer,
-      renderer: 'svg',
-      loop: this.props.options.loop !== false,
-      autoplay: this.props.options.autoplay !== false,
-      animationData: this.props.options.animationData,
-      rendererSettings: this.props.options.rendererSettings
-    };
-    this.anim = bodymovin.loadAnimation(this.options);
-  }
+  componentWillReceiveProps( nextProps ) {
+    const currentKey = nextProps.currentKey;
+    const animationData = KeyAnimations;
 
-  componentWillUpdate( nextProps, nextState ) {
-    if( this.options.animationData !== nextProps.options.animationData ) {
-      this.destroy();
-      this.options.animationData = nextProps.options.animationData;
-      this.anim = bodymovin.loadAnimation(this.options);
+    if( currentKey ) {
+      //Random index to play
+      let randIndex = Math.floor( Math.random() * animationData[currentKey].length );
+      let id = currentKey + randIndex.toString();
+
+      this.updateTriggeredStatus( id, true );
+
+      document.getElementById(styles.hint).style.opacity = 0;
     }
   }
-  /*
-  componentDidUpdate() {
-    this.props.isStopped ? this.stop() : this.play();
-    this.pause();
-    this.setSpeed();
-    this.setDirection();
+
+  updateTriggeredStatus( id, status) {
+    let triggered = this.state.triggered;
+    triggered[id] = status;
+
+    this.setState(
+      triggered: triggered
+    );
   }
 
-  pause() {
-    if (this.props.isPaused && !this.anim.isPaused) {
-      this.anim.pause()
-    } else if (!this.props.isPaused && this.anim.isPaused) {
-      this.anim.pause()
-    }
-  }*/
-
-  stop() {
-    this.anim.stop();
-  }
-
-  play() {
-    this.anim.play();
-  }
-  /*
-  setSpeed() {
-    this.anim.setSpeed(this.props.speed);
-  }
-
-  setDirection() {
-    this.anim.setDirection(this.props.direction)
-  }
-  */
-  destroy() {
-    this.anim.destroy();
+  onComplete( id ){
+      this.updateTriggeredStatus( id, false );
   }
 }
 
 Animation.propTypes = {
-  options: PropTypes.object.isRequired,
-  height: PropTypes.number,
-  width: PropTypes.number,
+  //options: PropTypes.object.isRequired,
+  //height: PropTypes.number,
+  //width: PropTypes.number,
   //isStopped: PropTypes.bool,
   //isPaused: PropTypes.bool,
   //speed: PropTypes.number,

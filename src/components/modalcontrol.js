@@ -13,6 +13,13 @@ export default class ModalControl extends React.Component {
     this.state={
       open: true,
       loaded: false,
+      inlineStyle: {
+            padding: '0px',
+            minHeight: '450px',
+            minWidth: '800px',
+            background: 'pink',
+            opacity: '0'
+          }
     };
   }
 
@@ -24,36 +31,41 @@ export default class ModalControl extends React.Component {
 
   onLoad() {
     console.log('Loader Should dismiss');
+    let inlineStyle = this.state.inlineStyle;
+
+    inlineStyle = {
+      ...inlineStyle,
+      opacity: 1,
+      transition: 'opacity 2s ease-in'
+    };
+
     this.setState({
-      loaded: true
+      loaded: true,
+      inlineStyle: inlineStyle
     });
+
+    console.log(inlineStyle);
   }
 
   render() {
     const { open, loaded } = this.state;
-
-    const inlineStyle = ({
-      padding: '0px',
-    });
 
     const ModelOptions = {
       open: open,
       onClose: this.onCloseModal,
       little: true,
       closeOnOverlayClick: false,
-      modalStyle: inlineStyle,
+      modalStyle: this.state.inlineStyle,
       showCloseIcon: loaded,
     };
 
     return (
-      <div>
+      <TransitionGroup>
+        <Loader loaded={this.state.loaded}/>
         <Modal {...ModelOptions}>
-          <TransitionGroup>
-            <Loader loaded={this.state.loaded}/>
             <PlayGround onLoad={this.onLoad}/>
-          </TransitionGroup>
         </Modal>
-      </div>
+      </TransitionGroup>
     );
   }
 }

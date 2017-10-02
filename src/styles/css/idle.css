@@ -1,0 +1,39 @@
+#hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 15%;
+  text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.message {
+    display: inline-flex;
+    background-color: white;
+    color: #666666;
+    min-width: 548px;
+    justify-content: space-around;
+    font-family: "Lucida Grande", verdana, sans-serif;
+    font-size: 12px;
+    line-height: 32px;
+    border-radius: 10.56px;
+    padding: 0 16px;
+    @media (max-width: 400px) {
+      #hint .message {
+        font-size: 10px;
+        min-width: 462px;
+        }
+      }
+}
+
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 2000ms ease-in;
+}

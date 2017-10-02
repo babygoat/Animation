@@ -2,13 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import key from 'keymaster'
 import { Players } from 'tone';
-import Animation from '../utilities/animation'
-import {Keys, KeyAnimations, KeyMusicUrls} from '../utilities/config/keys.config.js'
+import CSSTransition from 'react-transition-group/CSSTransition';
+import Animation from '../utilities/animation';
+import {Keys, KeyMusicUrls} from '../utilities/config/keys.config.js';
+import styles from '../styles/css/idle.css';
 
 export default class PlayGround extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { currentKey: '', currentAnimation: null, isMusicLoaded: false };
+
+    this.state = {
+      currentKey: '',
+      isMusicLoaded: false
+     };
+
     this.initKeyboard = this.initKeyboard.bind(this);
     this.initMusics   = this.initMusics.bind(this);
     this.keyHandler   = this.keyHandler.bind(this);
@@ -32,11 +39,6 @@ export default class PlayGround extends React.Component {
   }
 
   keyHandler(event,handler) {
-    const animationArray = KeyAnimations[handler.shortcut];
-    const currentAni = animationArray[Math.floor( Math.random() * animationArray.length )];
-
-    console.log(this.musicHandler);
-
     if( 'started' === this.musicHandler.state ){
       this.musicHandler.stopAll();
     }
@@ -45,7 +47,6 @@ export default class PlayGround extends React.Component {
 
     this.setState({
       currentKey: handler.shortcut,
-      currentAnimation: currentAni,
     });
   }
 
@@ -66,19 +67,7 @@ export default class PlayGround extends React.Component {
   }
 
   render() {
-    const onMusicLoaded = this.state.isMusicLoaded;
-
-    const defaultOptions = {
-      loop: false,
-      autoplay: true,
-      animationData: this.state.currentAnimation,
-      rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice'
-      } 
-    };
-
-    return onMusicLoaded ? (
-      <Animation options={defaultOptions}
-      />) : null;
+    console.log( 'Key pass to animation: ' + this.state.currentKey );
+    return <Animation currentKey={this.state.currentKey} />;
   }
 }
