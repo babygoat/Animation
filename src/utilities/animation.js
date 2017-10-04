@@ -5,17 +5,17 @@ import CSSTransition from 'react-transition-group/CSSTransition';
 import styles from '../styles/css/idle.css'
 import AnimationContainer from '../components/animationContainer';
 import {KeyAnimations} from '../utilities/config/keys.config.js';
+import Timer from '../utilities/timer.js'
 
 export default class Animation extends React.Component {
   constructor(props) {
     super(props);
     this.onComplete = this.onComplete.bind(this);
     this.updateTriggeredStatus = this.updateTriggeredStatus.bind(this);
-    this.node = null;
-    this.name = '';
+    this.idleDetect = this.idleDetect.bind(this);
+    this.timer = new Timer(this.idleDetect, 5000);
 
     const animationArr = KeyAnimations;
-
     let triggeredArr = {};
 
     Object.keys(animationArr).map((key) => (
@@ -28,6 +28,7 @@ export default class Animation extends React.Component {
     this.state = {
       triggered: triggeredArr,
       currentPlaying: '',
+      idle: true,
     }
   }
 
@@ -59,6 +60,20 @@ export default class Animation extends React.Component {
            </div>;
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    let elem = document.getElementById(styles.hint);
+
+    if(nextState.idle) {
+      if(!elem.classList.contains(styles.hintEnter)){
+        elem.classList.add(styles.hintEnter);
+      }
+      elem.classList.add(styles.hintEnterActive);
+    }
+    else {
+      elem.classList.remove(styles.hintEnterActive);
+    }
+  }
+
   componentWillReceiveProps( nextProps ) {
     const currentKey = nextProps.currentKey;
     const animationData = KeyAnimations;
@@ -70,11 +85,25 @@ export default class Animation extends React.Component {
 
       this.updateTriggeredStatus( id, true );
 
-      document.getElementById(styles.hint).style.opacity = 0;
+      this.timer.stop();
+      this.setState({
+        idle: false,
+      });
     }
   }
 
-  updateTriggeredStatus( id, status) {
+  idleDetect() {
+    console.log('idle');
+    this.setState({
+      idle: true,
+    });
+  }
+
+  componentWillUnmount() {
+    this.timer.stop();
+  }
+
+  updateTriggeredStatus(id, status) {
     let triggered = this.state.triggered;
     triggered[id] = status;
 
@@ -83,8 +112,10 @@ export default class Animation extends React.Component {
     );
   }
 
-  onComplete( id ){
-      this.updateTriggeredStatus( id, false );
+  onComplete(id) {
+    console.log('onComplete');
+    this.updateTriggeredStatus(id, false);
+    this.timer.start();
   }
 }
 

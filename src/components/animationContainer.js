@@ -27,6 +27,7 @@ export default class AnimationContainer extends React.Component {
     this.setState({
       animState: 'animExit',
     })
+    this.notifyParentComplete(this.animItem.name);
   }
 
   componentWillUpdate(nextProps,nextState) {
@@ -90,6 +91,10 @@ export default class AnimationContainer extends React.Component {
     this.setState({
       animState: 'idle',
     })
+  }
+
+  componentWillUnmount(){
+    this.animItem.destroy();
   }
 
   render() {

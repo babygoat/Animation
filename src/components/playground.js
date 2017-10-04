@@ -64,6 +64,7 @@ export default class PlayGround extends React.Component {
 
   componentWillUnmount() {
     key.deleteScope('Animation');
+    this.musicHandler.dispose();
   }
 
   render() {

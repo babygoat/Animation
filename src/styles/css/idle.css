@@ -29,11 +29,11 @@
       }
 }
 
-.fade-enter {
-  opacity: 0.01;
+.hint-enter {
+  opacity: 0;
 }
 
-.fade-enter.fade-enter-active {
+.hint-enter.hint-enter-active {
   opacity: 1;
-  transition: opacity 2000ms ease-in;
+  transition: opacity 500ms ease-in;
 }
