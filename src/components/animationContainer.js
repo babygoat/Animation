@@ -66,6 +66,9 @@ export default class AnimationContainer extends React.Component {
           this.animItem.goToAndPlay(0, true, this.animItem.name);
         }
       }
+      else if(!nextProps.triggered && !this.animItem._idle){
+        this.onComplete();
+      }
   }
 
   componentDidMount() {
@@ -77,7 +80,7 @@ export default class AnimationContainer extends React.Component {
       animationData: this.props.animationData,
       name: this.props.name,
       rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice'
+        preserveAspectRatio: 'xMidYMid meet'
       }
     };
 
@@ -103,6 +106,7 @@ export default class AnimationContainer extends React.Component {
       height: '100%',
       overflow: 'hidden',
       margin: '0 auto',
+      position: 'absolute',
     };
 
     const classNames = {

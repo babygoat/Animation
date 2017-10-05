@@ -1,5 +1,5 @@
 export default function Timer(fn, t) {
-    var timerObj = setInterval(fn, t);
+    let timerObj;
 
     this.stop = function() {
         if (timerObj) {

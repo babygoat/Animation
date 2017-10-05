@@ -1,14 +1,15 @@
 import * as animationData from '../../assets/test.json';
+import * as animationData1 from '../../assets/data.json';
 import assert from '../assert.js';
 
-const KeyRange = 1;
+const KeyRange = 2;
 
 const Keys = Array.from(Array(KeyRange).keys()).map((i) => String.fromCharCode(97 + i));
 
 const KeyAnimations = {
   'a': [animationData],
-/*  'b': [animationData],
-  'c': [animationData],
+  'b': [animationData1],
+/*  'c': [animationData],
   'd': [animationData],
   'e': [animationData],
   'f': [animationData],
@@ -25,8 +26,8 @@ assert( Object.keys(KeyAnimations).length == KeyRange, 'Mismatch between KeyRang
 
 const KeyMusicUrls = {
   'a': './assets/musics/IntoUncertainty.mp3',
-/*  'b': './assets/musics/MilesToGo.mp3',
-  'c': './assets/musics/TakeItSlow.mp3',
+  'b': './assets/musics/MilesToGo.mp3',
+/*  'c': './assets/musics/TakeItSlow.mp3',
   'd': './assets/musics/IntoUncertainty.mp3',
   'e': './assets/musics/MilesToGo.mp3',
   'f': './assets/musics/TakeItSlow.mp3',

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import bodymovin from 'bodymovin';
-import CSSTransition from 'react-transition-group/CSSTransition';
 import styles from '../styles/css/idle.css'
 import AnimationContainer from '../components/animationContainer';
 import {KeyAnimations} from '../utilities/config/keys.config.js';
@@ -13,6 +12,7 @@ export default class Animation extends React.Component {
     this.onComplete = this.onComplete.bind(this);
     this.updateTriggeredStatus = this.updateTriggeredStatus.bind(this);
     this.idleDetect = this.idleDetect.bind(this);
+    this.toggleHint = this.toggleHint.bind(this);
     this.timer = new Timer(this.idleDetect, 5000);
 
     const animationArr = KeyAnimations;
@@ -21,7 +21,7 @@ export default class Animation extends React.Component {
     Object.keys(animationArr).map((key) => (
       animationArr[key].forEach((animationData,index,array) => {
         let animationId = key+index.toString();
-        Object.assign(triggeredArr, { animationId: false} );
+        triggeredArr[animationId] = false;
       })
     ));
 
@@ -60,17 +60,13 @@ export default class Animation extends React.Component {
            </div>;
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    let elem = document.getElementById(styles.hint);
+  componentDidMount() {
+    this.toggleHint(this.state.idle);
+  }
 
-    if(nextState.idle) {
-      if(!elem.classList.contains(styles.hintEnter)){
-        elem.classList.add(styles.hintEnter);
-      }
-      elem.classList.add(styles.hintEnterActive);
-    }
-    else {
-      elem.classList.remove(styles.hintEnterActive);
+  componentWillUpdate(nextProps, nextState) {
+    if(this.state.idle !== nextState.idle){
+      this.toggleHint(nextState.idle);
     }
   }
 
@@ -86,10 +82,17 @@ export default class Animation extends React.Component {
       this.updateTriggeredStatus( id, true );
 
       this.timer.stop();
-      this.setState({
-        idle: false,
-      });
+
+      if(this.state.idle) {
+        this.setState({
+          idle: false,
+        });
+      }
     }
+  }
+
+  componentWillUnmount() {
+    this.timer.stop();
   }
 
   idleDetect() {
@@ -97,19 +100,38 @@ export default class Animation extends React.Component {
     this.setState({
       idle: true,
     });
+    this.timer.stop();
   }
 
-  componentWillUnmount() {
-    this.timer.stop();
+  toggleHint( idle ){
+    let elem = document.getElementById(styles.hint);
+
+    if(idle) {
+      if(!elem.classList.contains(styles.hintEnter)){
+        elem.classList.add(styles.hintEnter);
+      }
+      elem.classList.add(styles.hintEnterActive);
+    }
+    else {
+      elem.classList.remove(styles.hintEnterActive);
+    }
   }
 
   updateTriggeredStatus(id, status) {
     let triggered = this.state.triggered;
-    triggered[id] = status;
+    let newState  = {};
 
-    this.setState(
-      triggered: triggered
-    );
+    if(status) {
+      if(this.state.currentPlaying !== id){
+        triggered[this.state.currentPlaying] = false;
+        Object.assign(newState,{currentPlaying: id})
+      }
+    }
+
+    triggered[id] = status;
+    Object.assign(newState,{triggered: triggered});
+    console.log(newState);
+    this.setState(newState);
   }
 
   onComplete(id) {
