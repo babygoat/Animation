@@ -2,3 +2,4 @@ node_modules/*
 dist/*
 notes.txt
 materials/*
+npm-debug.log*

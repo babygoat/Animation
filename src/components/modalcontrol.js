@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-responsive-modal';
-import TransitionGroup from 'react-transition-group/transitiongroup';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 import PlayGround from './playground';
 import Loader from './loader';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import bodymovin from 'bodymovin';
+import bodymovin from 'bodymovin/build/player/bodymovin.min.js';
 import styles from '../styles/css/animation.css'
 
 export default class AnimationContainer extends React.Component {
@@ -77,7 +77,7 @@ export default class AnimationContainer extends React.Component {
       loop: false,
       autoplay: false,
       container: this.refs[this.props.name],
-      animationData: this.props.animationData,
+      path: this.props.animationUrl,
       name: this.props.name,
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid meet'

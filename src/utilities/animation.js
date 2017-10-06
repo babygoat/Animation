@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import bodymovin from 'bodymovin';
 import styles from '../styles/css/idle.css'
 import AnimationContainer from '../components/animationContainer';
-import {KeyAnimations} from '../utilities/config/keys.config.js';
+import {KeyAnimationUrls} from '../utilities/config/keys.config.js';
 import Timer from '../utilities/timer.js'
 
 export default class Animation extends React.Component {
@@ -15,11 +14,11 @@ export default class Animation extends React.Component {
     this.toggleHint = this.toggleHint.bind(this);
     this.timer = new Timer(this.idleDetect, 5000);
 
-    const animationArr = KeyAnimations;
+    const animationArr = KeyAnimationUrls;
     let triggeredArr = {};
 
     Object.keys(animationArr).map((key) => (
-      animationArr[key].forEach((animationData,index,array) => {
+      animationArr[key].forEach((animationUrl,index,array) => {
         let animationId = key+index.toString();
         triggeredArr[animationId] = false;
       })
@@ -33,19 +32,19 @@ export default class Animation extends React.Component {
   }
 
   render() {
-    const animationArr = KeyAnimations;
+    const animationArr = KeyAnimationUrls;
 
     let containerArr = [];
 
     Object.keys(animationArr).map((key) => (
-      animationArr[key].forEach((animationData,index,array) => {
+      animationArr[key].forEach((animationUrl,index,array) => {
         let id = key+index.toString();
         containerArr.push(
           <AnimationContainer
             key = {id}
             name = {id}
             triggered = {this.state.triggered[id]}
-            animationData = {animationData}
+            animationUrl = {animationUrl}
             onComplete = {this.onComplete}
           />
         )
@@ -55,7 +54,7 @@ export default class Animation extends React.Component {
     return <div>
             {containerArr}
             <div id={styles.hint}>
-              <p className={styles.message}>Press Key A to M and turn up your speakers!</p>
+              <p className={styles.message}>Press Key A & B and turn up your speakers!</p>
             </div>
            </div>;
   }
@@ -72,11 +71,11 @@ export default class Animation extends React.Component {
 
   componentWillReceiveProps( nextProps ) {
     const currentKey = nextProps.currentKey;
-    const animationData = KeyAnimations;
+    const animationUrl = KeyAnimationUrls;
 
     if( currentKey ) {
       //Random index to play
-      let randIndex = Math.floor( Math.random() * animationData[currentKey].length );
+      let randIndex = Math.floor( Math.random() * animationUrl[currentKey].length );
       let id = currentKey + randIndex.toString();
 
       this.updateTriggeredStatus( id, true );

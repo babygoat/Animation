@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import key from 'keymaster'
-import { Players } from 'tone';
+import { Players } from 'tone/build/Tone.min.js';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import Animation from '../utilities/animation';
 import {Keys, KeyMusicUrls} from '../utilities/config/keys.config.js';
