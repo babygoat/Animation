@@ -55,6 +55,7 @@ module.exports = {
               camelCase: true
             },
           },
+          'postcss-loader'
         ],
       },
       {
