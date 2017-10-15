@@ -80,7 +80,7 @@ export default class AnimationContainer extends React.Component {
       path: this.props.animationUrl,
       name: this.props.name,
       rendererSettings: {
-        preserveAspectRatio: 'xMidYMid meet'
+        preserveAspectRatio: 'xMidYMid slice'
       }
     };
 

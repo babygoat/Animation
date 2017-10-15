@@ -141,17 +141,9 @@ export default class Animation extends React.Component {
 }
 
 Animation.propTypes = {
-  //options: PropTypes.object.isRequired,
-  //height: PropTypes.number,
-  //width: PropTypes.number,
-  //isStopped: PropTypes.bool,
-  //isPaused: PropTypes.bool,
-  //speed: PropTypes.number,
-  //direction: PropTypes.number,
-};
-/*
+  currentKey: PropTypes.String,
+}
+
 Animation.defaultProps = {
-  isStopped: false,
-  isPaused: false,
-  speed: 1,
-};*/
+  currentKey: '',
+}
