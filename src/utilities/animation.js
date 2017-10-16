@@ -17,8 +17,6 @@ export default function Animation( containerSet, notifyParentComplete ) {
     const animationArr = KeyAnimationUrls;
     const refContainerSet = containerSet;
 
-    console.log(refContainerSet);
-
     let options = {
       renderer: 'svg',
       loop: false,

@@ -27,7 +27,7 @@ module.exports = {
       'react',
       'react-dom',
       'react-responsive-modal',
-      'react-transition-group',
+      'react-window-resize-listener',
       'prop-types',
       'mobile-detect/mobile-detect.min.js',
       'keymaster',

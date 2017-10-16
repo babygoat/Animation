@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-responsive-modal';
 import { WindowResizeListener } from 'react-window-resize-listener';
-import TransitionGroup from 'react-transition-group/TransitionGroup';
 import PlayGround from './playground';
 import Loader from './loader';
 
@@ -55,7 +54,6 @@ export default class ModalControl extends React.Component {
   };
 
   onLoad() {
-    console.log('Loader Should dismiss');
     let inlineStyle = this.state.inlineStyle;
 
     inlineStyle = {
@@ -68,8 +66,6 @@ export default class ModalControl extends React.Component {
       loaded: true,
       inlineStyle: inlineStyle
     });
-
-    console.log(inlineStyle);
   }
 
   componentDidMount(){
@@ -85,12 +81,11 @@ export default class ModalControl extends React.Component {
       little: true,
       closeOnOverlayClick: false,
       modalStyle: this.state.inlineStyle,
-      iconStyle: {position: 'fixed' },
       showCloseIcon: loaded,
     };
 
     return (
-      <TransitionGroup>
+      <div>
         <Loader loaded={this.state.loaded}/>
         <WindowResizeListener
           onResize={w => this.onResize(w.windowWidth, w.windowHeight)}
@@ -98,7 +93,7 @@ export default class ModalControl extends React.Component {
         <Modal {...ModelOptions}>
             <PlayGround onLoad={this.onLoad}/>
         </Modal>
-      </TransitionGroup>
+      </div>
     );
   }
 }

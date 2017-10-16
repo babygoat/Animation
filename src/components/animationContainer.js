@@ -20,5 +20,5 @@ export default function AnimationContainer(props) {
     position: 'absolute',
   };
 
-  return <div id={props.name} ref={props.handler} className={stateMapping[props.animState]} style={lottieStyles} />
+  return <div ref={props.handler} className={stateMapping[props.animState]} style={lottieStyles} />
 }
