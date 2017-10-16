@@ -2,20 +2,27 @@ var path = require( 'path' );
 var webpack = require('webpack');
 // 讓你可以動態插入 bundle 好的 .js 檔到 .index.html
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: `${__dirname}/src/index.html`,
+  files: {
+    css: ['style.css'],
+    js: ['bundle.js'],
+  },
   filename: 'index.html',
-  inject: 'body',
 });
 
 const CopyWebpackPluginConfig = new CopyWebpackPlugin([{
    from: 'src/assets',
    to: 'assets'
  }]);
+
+//extract stylesheet into a separate file
+const ExtractCssTextPlugin = new ExtractTextPlugin('[contenthash].css');
 
 // entry 為進入點，output 為進行完 eslint、babel loader 轉譯後的檔案位置
 module.exports = {
@@ -35,7 +42,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js',
+    filename: '[chunkhash].bundle.js',
   },
   module: {
     rules: [
@@ -46,17 +53,20 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          { loader: 'style-loader' },
-          {
-            loader: 'css-loader',
-            options: {
-              module: true,
-              camelCase: true
+        exclude: /(node_modules)/,
+        use: ExtractCssTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                module: true,
+                camelCase: true
+              },
             },
-          },
-          'postcss-loader'
-        ],
+            'postcss-loader'
+          ]
+        }),
       },
       {
         enforce: 'pre',
@@ -90,24 +100,6 @@ module.exports = {
         names: ['vendor.bodymovin','vendor.tone','vendor'],
         minChunks: Infinity,
     }),
-    /*new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor.bodymovin',
-        chunk: ['app'],
-        filename: 'bodymovin-chunk.js',
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        chunk: ['vendor.bodymovin'],
-        filename: 'vendor-chunk.js',
-    }),*/
-    /*new webpack.optimize.CommonsChunkPlugin({
-        name: 'node-static',
-        filename: 'node-static.js',
-        minChunks(module, count) {
-            var context = module.context;
-            return context && context.indexOf('node_modules') >= 0;
-        },
-    }),*/
     new WebpackCleanupPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
@@ -118,6 +110,7 @@ module.exports = {
       }
     }),
     //new webpack.optimize.OccurrenceOrderPlugin(),
+    ExtractCssTextPlugin,
     HTMLWebpackPluginConfig,
     CopyWebpackPluginConfig,
   ],
