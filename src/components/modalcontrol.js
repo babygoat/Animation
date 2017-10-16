@@ -31,7 +31,6 @@ export default class ModalControl extends React.Component {
     let resizeHeight;
     let resizeWidth;
 
-    console.log('ratio:%f',animRatio);
     if( width/height > animRatio ){
       resizeHeight = height * 0.9;
       resizeWidth = resizeHeight / 0.5625;

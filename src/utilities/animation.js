@@ -1,149 +1,82 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styles from '../styles/css/idle.css'
-import AnimationContainer from '../components/animationContainer';
+'use strict';
+import bodymovin from 'bodymovin/build/player/bodymovin.min.js';
 import {KeyAnimationUrls} from '../utilities/config/keys.config.js';
-import Timer from '../utilities/timer.js'
 
-export default class Animation extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onComplete = this.onComplete.bind(this);
-    this.updateTriggeredStatus = this.updateTriggeredStatus.bind(this);
-    this.idleDetect = this.idleDetect.bind(this);
-    this.toggleHint = this.toggleHint.bind(this);
-    this.timer = new Timer(this.idleDetect, 5000);
+export default function Animation( containerSet, notifyParentComplete ) {
+  const KeyAnimationHandlers = {};
+  const refContainerSet = containerSet;
+  let  playId = '';
 
+  const onComplete = () => {
+    KeyAnimationHandlers[playId].stop();
+    notifyParentComplete(playId);
+    playId = '';
+  }
+
+  const initAnimationItems = () => {
     const animationArr = KeyAnimationUrls;
-    let triggeredArr = {};
+    const refContainerSet = containerSet;
+
+    console.log(refContainerSet);
+
+    let options = {
+      renderer: 'svg',
+      loop: false,
+      autoplay: false,
+      rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice'
+      }
+    };
 
     Object.keys(animationArr).map((key) => (
       animationArr[key].forEach((animationUrl,index,array) => {
-        let animationId = key+index.toString();
-        triggeredArr[animationId] = false;
+        options = {
+          ...options,
+          container: refContainerSet[key],
+          path: animationUrl,
+          name: key,
+        };
+
+        let animItem = bodymovin.registerAnimation(refContainerSet[key],null);
+        animItem.setParams(options);
+        animItem.addEventListener('complete',onComplete);
+        KeyAnimationHandlers[key] = animItem;
       })
     ));
-
-    this.state = {
-      triggered: triggeredArr,
-      currentPlaying: '',
-      idle: true,
-    }
   }
 
-  render() {
-    const animationArr = KeyAnimationUrls;
+  const updatePlayAnimation = (nextId) => {
+    const nextAnimItem = KeyAnimationHandlers[nextId];
 
-    let containerArr = [];
-
-    Object.keys(animationArr).map((key) => (
-      animationArr[key].forEach((animationUrl,index,array) => {
-        let id = key+index.toString();
-        containerArr.push(
-          <AnimationContainer
-            key = {id}
-            name = {id}
-            triggered = {this.state.triggered[id]}
-            animationUrl = {animationUrl}
-            onComplete = {this.onComplete}
-          />
-        )
-      })
-    ));
-
-    return <div>
-            {containerArr}
-            <div id={styles.hint}>
-              <p className={styles.message}>Press Key A & B and turn up your speakers!</p>
-            </div>
-           </div>;
-  }
-
-  componentDidMount() {
-    this.toggleHint(this.state.idle);
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if(this.state.idle !== nextState.idle){
-      this.toggleHint(nextState.idle);
-    }
-  }
-
-  componentWillReceiveProps( nextProps ) {
-    const currentKey = nextProps.currentKey;
-    const animationUrl = KeyAnimationUrls;
-
-    if( currentKey ) {
-      //Random index to play
-      let randIndex = Math.floor( Math.random() * animationUrl[currentKey].length );
-      let id = currentKey + randIndex.toString();
-
-      this.updateTriggeredStatus( id, true );
-
-      this.timer.stop();
-
-      if(this.state.idle) {
-        this.setState({
-          idle: false,
-        });
+    if( playId ){
+      if(playId === nextId) {
+        nextAnimItem.goToAndPlay(0, true, nextAnimItem.name);
       }
-    }
-  }
-
-  componentWillUnmount() {
-    this.timer.stop();
-  }
-
-  idleDetect() {
-    console.log('idle');
-    this.setState({
-      idle: true,
-    });
-    this.timer.stop();
-  }
-
-  toggleHint( idle ){
-    let elem = document.getElementById(styles.hint);
-
-    if(idle) {
-      if(!elem.classList.contains(styles.hintEnter)){
-        elem.classList.add(styles.hintEnter);
+      else {
+        const curAnimItem = KeyAnimationHandlers[playId];
+        curAnimItem.stop();
+        onComplete();
+        nextAnimItem.play();
       }
-      elem.classList.add(styles.hintEnterActive);
     }
     else {
-      elem.classList.remove(styles.hintEnterActive);
+      nextAnimItem.play();
+    }
+
+    playId = nextId;
+  }
+
+  const destroyAnimation = () => {
+    for( let animItem in KeyAnimationHandlers ) {
+      animItem.destroy();
     }
   }
 
-  updateTriggeredStatus(id, status) {
-    let triggered = this.state.triggered;
-    let newState  = {};
+  initAnimationItems();
 
-    if(status) {
-      if(this.state.currentPlaying !== id){
-        triggered[this.state.currentPlaying] = false;
-        Object.assign(newState,{currentPlaying: id})
-      }
-    }
-
-    triggered[id] = status;
-    Object.assign(newState,{triggered: triggered});
-    console.log(newState);
-    this.setState(newState);
-  }
-
-  onComplete(id) {
-    console.log('onComplete');
-    this.updateTriggeredStatus(id, false);
-    this.timer.start();
-  }
-}
-
-Animation.propTypes = {
-  currentKey: PropTypes.String,
-}
-
-Animation.defaultProps = {
-  currentKey: '',
+  return {
+    KeyAnimationHandlers,
+    updatePlayAnimation,
+    destroyAnimation,
+  };
 }
