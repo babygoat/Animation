@@ -4,7 +4,8 @@ import assert from '../assert.js';
 
 const KeyRange = 2;
 
-const Keys = Array.from(Array(KeyRange).keys()).map((i) => String.fromCharCode(97 + i));
+//const Keys = Array.from(Array(KeyRange).keys()).map((i) => String.fromCharCode(97 + i));
+const Keys = ['a','b'];
 
 const KeyAnimationUrls = {
   'a': ['./assets/test.json'],

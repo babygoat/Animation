@@ -27,14 +27,15 @@ const ExtractCssTextPlugin = new ExtractTextPlugin('[contenthash].css');
 // entry 為進入點，output 為進行完 eslint、babel loader 轉譯後的檔案位置
 module.exports = {
   entry: {
-    app: './src/index.js',
+    app: ['./src/index.js'],
     'vendor.bodymovin': ['bodymovin/build/player/bodymovin.min.js'],
-    'vendor.tone': ['tone/build/Tone.min.js'],
     vendor:[
+      'babel-polyfill',
       'react',
       'react-dom',
       'react-responsive-modal',
       'react-window-resize-listener',
+      'howler',
       'prop-types',
       'mobile-detect/mobile-detect.min.js',
       'keymaster',

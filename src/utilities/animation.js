@@ -65,7 +65,7 @@ export default function Animation( containerSet, notifyParentComplete ) {
   }
 
   const destroyAnimation = () => {
-    for( let animItem in KeyAnimationHandlers ) {
+    for( let animItem of Object.values(KeyAnimationHandlers) ){
       animItem.destroy();
     }
   }

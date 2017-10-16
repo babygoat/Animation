@@ -18,6 +18,7 @@ export default class ModalControl extends React.Component {
             padding: '0px',
             minHeight: '225px',
             minWidth: '400px',
+            maxWidth: '100%',
             background: 'pink',
             opacity: '0'
           }
@@ -30,7 +31,7 @@ export default class ModalControl extends React.Component {
     let resizeHeight;
     let resizeWidth;
 
-    if( width/height > animRatio ){
+    if( width*1.0/height > animRatio ){
       resizeHeight = height * 0.9;
       resizeWidth = resizeHeight / 0.5625;
     }

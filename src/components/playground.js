@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import key from 'keymaster'
-import { Players } from 'tone/build/Tone.min.js';
 import AnimationContainer from './animationContainer';
 import Hint from './hint';
 import Animation from '../utilities/animation';
-import Timer from '../utilities/timer'
+import Timer from '../utilities/timer';
+import Player from '../utilities/Player';
 import {Keys, KeyMusicUrls} from '../utilities/config/keys.config.js';
 
 const IdleTime = 10000;
@@ -90,7 +90,7 @@ export default class PlayGround extends React.Component {
   }
 
   initMusics() {
-    this.musicHandler = new Players(KeyMusicUrls, this.onMusicLoaded).toMaster();
+    this.musicHandler = Player(KeyMusicUrls, this.onMusicLoaded);
   }
 
   onMusicLoaded(){
@@ -105,11 +105,11 @@ export default class PlayGround extends React.Component {
   }
 
   keyHandler(event,handler) {
-    if( 'started' === this.musicHandler.state ){
-      this.musicHandler.stopAll();
+    if(this.musicHandler.isPlaying()){
+      this.musicHandler.stop();
     }
 
-    this.musicHandler.get(handler.shortcut).start();
+    this.musicHandler.play(handler.shortcut);
     this.playAnimation(handler.shortcut);
   }
 

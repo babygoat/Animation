@@ -17,7 +17,7 @@ const CopyWebpackPluginConfig = new CopyWebpackPlugin([{
 // entry 為進入點，output 為進行完 eslint、babel loader 轉譯後的檔案位置
 module.exports = {
   entry: [
-    './src/index.js'
+    'babel-polyfill','./src/index.js'
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -61,7 +61,7 @@ module.exports = {
               ['es2015', {modules: false}],
               'react',
               'stage-0'
-            ]
+            ],
           }
         }
       ]
