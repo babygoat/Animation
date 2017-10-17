@@ -82,7 +82,7 @@ export default class ModalControl extends React.Component {
       little: true,
       closeOnOverlayClick: false,
       modalStyle: this.state.inlineStyle,
-      showCloseIcon: loaded,
+      showCloseIcon: false,
     };
 
     return (
