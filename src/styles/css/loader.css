@@ -8,6 +8,7 @@
 	height: 100%;
 	z-index: 9999;
 	background: url('../../assets/Preloader_3.gif') center no-repeat transparent;
+	pointer-events: none;
 }
 
 .fade-exit {

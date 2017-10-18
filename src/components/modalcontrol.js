@@ -4,6 +4,7 @@ import Modal from 'react-responsive-modal';
 import { WindowResizeListener } from 'react-window-resize-listener';
 import PlayGround from './playground';
 import Loader from './loader';
+import styles from '../styles/css/modal.css';
 
 export default class ModalControl extends React.Component {
   constructor(props) {
@@ -82,7 +83,8 @@ export default class ModalControl extends React.Component {
       little: true,
       closeOnOverlayClick: false,
       modalStyle: this.state.inlineStyle,
-      showCloseIcon: false,
+      showCloseIcon: loaded,
+      closeIconClassName: styles.closeIcon,
     };
 
     return (
