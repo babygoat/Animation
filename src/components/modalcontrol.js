@@ -5,6 +5,7 @@ import { WindowResizeListener } from 'react-window-resize-listener';
 import PlayGround from './playground';
 import Loader from './loader';
 import styles from '../styles/css/modal.css';
+import {animRatio} from '../utilities/config/const.config';
 
 export default class ModalControl extends React.Component {
   constructor(props) {
@@ -27,18 +28,17 @@ export default class ModalControl extends React.Component {
   }
 
   onResize( width, height ){
-    const animRatio = 16/9*1.0;
     const inlineStyle = this.state.inlineStyle;
     let resizeHeight;
     let resizeWidth;
 
     if( width*1.0/height > animRatio ){
       resizeHeight = height * 0.9;
-      resizeWidth = resizeHeight / 0.5625;
+      resizeWidth = resizeHeight * animRatio;
     }
     else{
       resizeWidth = width * 0.9;
-      resizeHeight = resizeWidth * 0.5625;
+      resizeHeight = resizeWidth / animRatio;
     }
     this.setState({
       inlineStyle: {

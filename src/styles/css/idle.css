@@ -11,15 +11,15 @@
 }
 
 .message {
-    display: inline-flex;
-    background-color: white;
-    color: #666666;
-    justify-content: space-around;
-    font-family: "Lucida Grande", verdana, sans-serif;
-    font-size: 12px;
-    line-height: 32px;
-    border-radius: 10.56px;
-    padding: 0 16px;
+  display: inline-flex;
+  background-color: white;
+  color: #666666;
+  justify-content: space-around;
+  font-family: "Lucida Grande", verdana, sans-serif;
+  font-size: 12px;
+  line-height: 32px;
+  border-radius: 10.56px;
+  padding: 0 16px;
 }
 
 .hint-enter {
