@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --devtool eval --progress --colors --content-base .",
+    "dev": "webpack-dev-server --devtool eval --progress --colors",
     "prod": "webpack -p --config webpack.prod.config.js",
     "deploy-s3": "s3-deploy ./dist/** --cwd ./dist/ --profile default --region ap-northeast-1 --bucket aquarium-test"
   },

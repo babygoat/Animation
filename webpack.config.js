@@ -2,47 +2,74 @@ var path = require( 'path' );
 // 讓你可以動態插入 bundle 好的 .js 檔到 .index.html
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const jsOutputDir = require('./path.config.js').jsOutputDir;
+const cssOutputDir = require('./path.config.js').cssOutputDir;
+const assetOutputDir = require('./path.config.js').assetOutputDir;
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: `${__dirname}/src/index.html`,
+  files: {
+    css: ['style.css'],
+    js: ['bundle.js'],
+  },
   filename: 'index.html',
-  inject: 'body',
 });
 
-const CopyWebpackPluginConfig = new CopyWebpackPlugin([{
-   from: 'src/assets',
-   to: 'assets'
- }]);
+const CopyWebpackPluginConfig = new CopyWebpackPlugin([
+  {from: 'src/assets/musics', to: assetOutputDir+'musics'},
+  {from: 'src/assets/animation', to: assetOutputDir+'animation'}
+]);
+
+const ExtractCssTextPlugin = new ExtractTextPlugin(cssOutputDir+'[name].css');
 
 // entry 為進入點，output 為進行完 eslint、babel loader 轉譯後的檔案位置
 module.exports = {
+  resolve: {
+    alias: {
+      Assets: path.resolve(__dirname,'src/assets'),
+      Root: process.cwd(),
+    }
+  },
   entry: [
     'babel-polyfill','./src/index.js'
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js',
+    filename: jsOutputDir+'[name].bundle.js',
+    publicPath:'/'
   },
   module: {
     rules: [
       {
         test: /\.gif/,
         exclude: /(node_modules)/,
-        loader: "url-loader?limit=10000&mimetype=image/gif&name=assets/[hash].[ext]"
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'image/gif',
+            name: assetOutputDir+'[hash:8].[ext]'
+          }
+        }],
       },
       {
         test: /\.css$/,
-        use: [
-          { loader: 'style-loader' },
-          {
-            loader: 'css-loader',
-            options: {
-              module: true,
-              camelCase: true
+        exclude: /(node_modules)/,
+        use: ExtractCssTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                module: true,
+                camelCase: true,
+              },
             },
-          },
-          'postcss-loader'
-        ],
+            'postcss-loader'
+          ]
+        }),
       },
       {
         enforce: 'pre',
@@ -72,6 +99,11 @@ module.exports = {
   devServer: {
     inline: true,
     port: 8008,
+    open: true,
   },
-  plugins: [HTMLWebpackPluginConfig, CopyWebpackPluginConfig],
+  plugins: [
+    ExtractCssTextPlugin,
+    HTMLWebpackPluginConfig,
+    CopyWebpackPluginConfig
+  ],
 };

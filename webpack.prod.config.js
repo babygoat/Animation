@@ -7,6 +7,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+const jsOutputDir = require('./path.config.js').jsOutputDir;
+const cssOutputDir = require('./path.config.js').cssOutputDir;
+const assetOutputDir = require('./path.config.js').assetOutputDir;
+
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: `${__dirname}/src/index.html`,
   files: {
@@ -16,13 +20,13 @@ const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   filename: 'index.html',
 });
 
-const CopyWebpackPluginConfig = new CopyWebpackPlugin([{
-   from: 'src/assets',
-   to: 'assets'
- }]);
+const CopyWebpackPluginConfig = new CopyWebpackPlugin([
+  {from: 'src/assets/musics', to: assetOutputDir+'musics'},
+  {from: 'src/assets/animation', to: assetOutputDir+'animation'}
+]);
 
 //extract stylesheet into a separate file
-const ExtractCssTextPlugin = new ExtractTextPlugin('[contenthash].css');
+const ExtractCssTextPlugin = new ExtractTextPlugin(cssOutputDir+'[contenthash].css');
 
 // entry 為進入點，output 為進行完 eslint、babel loader 轉譯後的檔案位置
 module.exports = {
@@ -41,16 +45,30 @@ module.exports = {
       'keymaster',
     ],
   },
+  resolve: {
+    alias: {
+      Assets: path.resolve(__dirname,'src/assets'),
+      Root: process.cwd(),
+    }
+  },
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[chunkhash].bundle.js',
+    path: path.resolve(__dirname, 'dist/'),
+    filename: jsOutputDir+'[chunkhash].bundle.js',
+    publicPath: '/',
   },
   module: {
     rules: [
       {
         test: /\.gif/,
         exclude: /(node_modules)/,
-        loader: "url-loader?limit=10000&mimetype=image/gif&name=assets/[hash].[ext]"
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'image/gif',
+            name: assetOutputDir+'[hash:8].[ext]'
+          }
+        }],
       },
       {
         test: /\.css$/,
@@ -62,7 +80,7 @@ module.exports = {
               loader: 'css-loader',
               options: {
                 module: true,
-                camelCase: true
+                camelCase: true,
               },
             },
             'postcss-loader'
@@ -95,13 +113,14 @@ module.exports = {
   },
   plugins: [
     new BundleAnalyzerPlugin({
-        analyzerMode: 'static'
+        analyzerMode: 'static',
+        reportFilename:'../tmp/report.html',
     }),
     new webpack.optimize.CommonsChunkPlugin({
         names: ['vendor.bodymovin','vendor.tone','vendor'],
         minChunks: Infinity,
     }),
-    new WebpackCleanupPlugin(),
+    new WebpackCleanupPlugin(['dist']),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,

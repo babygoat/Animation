@@ -1,5 +1,6 @@
 //import * as animationData from '../../assets/test.json';
 //import * as animationData1 from '../../assets/data.json';
+import {assetOutputDir} from 'Root/path.config.js';
 import assert from '../assert.js';
 
 const KeyRange = 2;
@@ -8,8 +9,8 @@ const KeyRange = 2;
 const Keys = ['a','b'];
 
 const KeyAnimationUrls = {
-  'a': ['./assets/test.json'],
-  'b': ['./assets/data.json'],
+  'a': [assetOutputDir+'animation/test.json'],
+  'b': [assetOutputDir+'animation/data.json'],
 }
 /*
 const KeyAnimation = {
@@ -31,8 +32,8 @@ const KeyAnimation = {
 assert( Object.keys(KeyAnimationUrls).length == KeyRange, 'Mismatch between KeyRange and Number of Key Animation definition!' );
 
 const KeyMusicUrls = {
-  'a': './assets/musics/IntoUncertainty.mp3',
-  'b': './assets/musics/MilesToGo.mp3',
+  'a': assetOutputDir+'musics/IntoUncertainty.mp3',
+  'b': assetOutputDir+'musics/MilesToGo.mp3',
 /*  'c': './assets/musics/TakeItSlow.mp3',
   'd': './assets/musics/IntoUncertainty.mp3',
   'e': './assets/musics/MilesToGo.mp3',
