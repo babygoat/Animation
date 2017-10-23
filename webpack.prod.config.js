@@ -52,7 +52,7 @@ module.exports = {
     }
   },
   output: {
-    path: path.resolve(__dirname, 'dist/'),
+    path: path.resolve(__dirname, '10moresocks'),
     filename: jsOutputDir+'[chunkhash].bundle.js',
     publicPath: '/',
   },

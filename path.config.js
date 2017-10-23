@@ -1,6 +1,6 @@
-const jsOutputDir = 'js/';
-const cssOutputDir = 'css/';
-const assetOutputDir = 'assets/';
+const jsOutputDir = 'file/js/';
+const cssOutputDir = 'file/css/';
+const assetOutputDir = 'file/assets/';
 
 module.exports = {
   jsOutputDir,

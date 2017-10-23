@@ -1,11 +1,662 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>animation</title>
+﻿<!DOCTYPE html>
+<html dir="ltr" lang="zh-Hant-TW">
+<head id="ctl00_Head1">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <link rel="apple-touch-icon" href="IMG/touch-icon-iphone.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="IMG/touch-icon-ipad.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="IMG/touch-icon-iphone-retina.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="IMG/touch-icon-ipad-retina.png" />
+
+    <!-- Web Fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Raleway:700,400,300" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Heebo" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet" type="text/css" />
+    <link href="CSS/bootstrap.css" rel="stylesheet" />
+    <link href="CSS/bootstrap-datepicker3.css" rel="stylesheet" />
+    <link href="CSS/font-awesome.css" rel="stylesheet" />
+    <link href="CSS/fontello.css" rel="stylesheet" />
+    <link href="CSS/magnific-popup.css" rel="stylesheet" />
+    <link href="CSS/settings.css" rel="stylesheet" />
+    <link href="CSS/navigation.css" rel="stylesheet" />
+    <link href="CSS/animate.css" rel="stylesheet" />
+    <link href="CSS/animations.css" rel="stylesheet" />
+    <link href="CSS/owl.carousel.css" rel="stylesheet" />
+    <link href="CSS/owl.transitions.css" rel="stylesheet" />
+    <link href="CSS/hover.css" rel="stylesheet" />
+    <link href="CSS/jquery.mCustomScrollbar.css" rel="stylesheet" />
+    <link href="CSS/table.css" rel="stylesheet" />
+    <link href="CSS/section.css" rel="stylesheet" />
+    <link href="CSS/shopcart.css" rel="stylesheet" />
+    <link href="CSS/style.css" rel="stylesheet" />
+    <link href="CSS/photoswipe.css" rel="stylesheet" />
+    <link href="CSS/photoswip-skin/default-skin.css" rel="stylesheet" />
+    <link href="CSS/easyzoom.css" rel="stylesheet" />
+    <link href="CSS/color/customer.css" rel="stylesheet" />
+    <link href="CSS/standard.css" rel="stylesheet" />
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-71292683-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    <!-- Facebook Pixel Code -->
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '220280311840476');
+        fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display: none"
+            src="https://www.facebook.com/tr?id=220280311840476&ev=PageView&noscript=1" />
+    </noscript>
+    <!-- End Facebook Pixel Code -->
+    <script type="text/javascript">
+        window._mfq = window._mfq || [];
+        (function () {
+            var mf = document.createElement("script");
+            mf.type = "text/javascript"; mf.async = true;
+            mf.src = "//cdn.mouseflow.com/projects/e16570d3-66a7-4183-b2ce-48f2a5e03192.js";
+            document.getElementsByTagName("head")[0].appendChild(mf);
+        })();
+    </script>
+    <style>
+        /*橫幅樣式*/
+        .banner .overlay-container {
+            background-position: center bottom;
+            background-size: cover;
+            position: relative;
+            height: 100%;
+        }
+
+        .banner .img {
+            background-position: center bottom;
+            background-size: cover;
+            height: 100%;
+        }
+
+        .banner-dots {
+            position: absolute;
+            left: 50px;
+            z-index: 120;
+        }
+
+            .banner-dots img {
+                width: auto;
+                height: 100%;
+            }
+
+            .banner-dots .num, .banner-dots .active {
+                position: absolute;
+                width: 30px;
+                height: 20px;
+                top: 0px;
+                left: 0px;
+                text-align: right;
+                z-index: 120;
+                font-size: 15px;
+                font-weight: 500;
+            }
+
+        #footer {
+            margin-top: 53px;
+        }
+
+        .owl-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            margin-top: -35px;
+        }
+
+        .owl-next {
+            background-image: url('IMG/banner_next_m.png');
+            background-repeat: no-repeat;
+            width: 70px;
+            height: 70px;
+            text-indent: -9999px;
+            position: absolute;
+            right: 0px;
+            background-position: center center;
+        }
+
+        .owl-prev {
+            display: none;
+        }
+
+        @media (min-width:768px) {
+            .owl-nav {
+                display: none;
+            }
+        }
+    </style>
+    <title>+10?加拾｜襪子王國的人當然要穿好看舒適的好襪子
+    </title>
+    <meta name="description" content="10隻腳趾頭總是一起被顧及到，一起帶著我們到整個世界去，跑跳玩耍的時候，走遍一整座城市的時候，想要去看更遠盡頭是不是有海的時候，不被看見卻安份存在身上的小細節，當然好好的選、好好的穿，好好的在爬樓梯、突然奔跑起來過馬路的那些瞬間，發出小亮光。每一天都有每一天重要的心情和天氣，每一天都不是跟昨天一模一樣的一天，每一天都再多往前+10。" />
+    <meta name="keywords" content="+10,+10?加拾,加拾,襪子,10moresocks, 10 more, ????" />
 </head>
-<body>
-    <div id="app"></div>
+<body class="wide fixed-header-on">
+
+
+
+    <form method="post" action="./" id="aspnetForm" class="form-horizontal">
+        <div class="aspNetHidden">
+            <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+            <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+            <input type="hidden" name="__ViewStateID" id="__ViewStateID" value="1" />
+            <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="" />
+        </div>
+
+        <script type="text/javascript">
+            //<![CDATA[
+            var theForm = document.forms['aspnetForm'];
+            function __doPostBack(eventTarget, eventArgument) {
+                if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+                    theForm.__EVENTTARGET.value = eventTarget;
+                    theForm.__EVENTARGUMENT.value = eventArgument;
+                    theForm.submit();
+                }
+            }
+            //]]>
+        </script>
+
+
+        <script src="/WebResource.axd?d=1mcQyjU5a2PhhHcoeVk8X91oAbAwNOwzmG_uxqsCM9ssYYycvbiAq-v0FQW4Dtc52VbZGDPXgSQizDpy27xP51Gp9QRoYuN8DmKccd1mRXk1&amp;t=636355194046607314" type="text/javascript"></script>
+
+
+        <script src="/ScriptResource.axd?d=gnFHYdwPEoxgvha9fGXFQt_a8P2FDHyW7w3I9ARv5aMYxBphabpEr4kZsYL4NUZlcuwsxeKqWSuv4QxTBkqkxpzLHH3G-e-OoOWwkeIbcaqhYw1m8bbfbAnMQHT5Xjkre4Q7VLWmqHrSYRTrh16B9w2&amp;t=27117261" type="text/javascript"></script>
+        <script type="text/javascript">
+            //<![CDATA[
+            if (typeof (Sys) === 'undefined') throw new Error('ASP.NET Ajax 用戶端架構無法載入。');
+            //]]>
+        </script>
+
+        <script src="/ScriptResource.axd?d=SC7zDoB3DQH89Ra5_Pmbtz8i_c7I8zTUTBGlUSeB80qvqgfCXJCfVbfVLyK18a2WmWmOTZfRxMT_AmuSYVFVMA3TbPZ1x00MGY5KEAT6xahdpyBvdCUzIu1QZTAQveY0MPOVSxihG52Bb8F0mla0QQ2&amp;t=27117261" type="text/javascript"></script>
+        <script type="text/javascript">
+            //<![CDATA[
+            Sys.WebForms.PageRequestManager._initialize('ctl00$ScriptManager', 'aspnetForm', ['tctl00$Bottom$UpdatePanelNewLetter', ''], [], [], 90, 'ctl00');
+            //]]>
+        </script>
+
+
+        <div class="page-wrapper">
+            <div class="header-container">
+                <header class="header fixed-customer clearfix transparent">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-2 col-lg-3">
+                                <div class="header-first clearfix">
+                                    <div class="logo">
+                                        <a href="/">
+                                            <img alt="+10?加拾｜襪子王國的人當然要穿好看舒適的好襪子" src="IMG/logo.png"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-10 col-lg-9">
+                                <div class="header-second clearfix">
+                                    <div class="main-navigation animated with-dropdown-buttons">
+                                        <nav class="navbar navbar-default" role="navigation">
+                                            <div class="container-fluid">
+                                                <div class="navbar-header">
+
+                                                    <div class="header-dropdown-buttons">
+                                                        <div id="search" class="btn-group dropdown">
+                                                            <button type="button" class="btn dropdown-toggle" aria-expanded="false" data-toggle="dropdown">
+                                                                <img src="IMG/search.png" /></button>
+                                                            <ul class="dropdown-menu dropdown-menu-right dropdown-animation search">
+                                                                <li>
+                                                                    <div class="form-group has-feedback">
+                                                                        <input type="text" class="form-control">
+                                                                        <i class="icon-search form-control-feedback"></i>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="btn-group dropdown">
+                                                            <button type="button" class="btn dropdown-toggle shopcart-trigger">
+                                                                <img src="IMG/shopcart.png" /><span class="cart-count default-bg"></span></button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                                                    <ul class="nav navbar-nav">
+                                                        <li class="dropdown"><a class="dropdown-toggle" href="/list/1" title="關於">關於</a></li>
+                                                        <li class="dropdown"><a class="dropdown-toggle" href="/product" title="商店">商店</a></li>
+                                                        <li class="dropdown"><a class="dropdown-toggle" href="/series/3" title="系列">系列</a><ul class="dropdown-menu" role="menu">
+                                                            <li class="dropdown"><a class="dropdown-toggle" href="/series/3/1" title="2016秋冬">2016秋冬</a></li>
+                                                            <li class="dropdown"><a class="dropdown-toggle" href="/series/3" title="全部">全部</a></li>
+                                                        </ul>
+                                                        </li>
+                                                        <li class="dropdown"><a class="dropdown-toggle" href="/blog/4" title="日誌">日誌</a><ul class="dropdown-menu" role="menu">
+                                                            <li class="dropdown"><a class="dropdown-toggle" href="/blog/4?class=32" title="正在發生">正在發生</a></li>
+                                                            <li class="dropdown"><a class="dropdown-toggle" href="/blog/4?class=33" title="展">展</a></li>
+                                                            <li class="dropdown"><a class="dropdown-toggle" href="/blog/4?class=34" title="設計想法">設計想法</a></li>
+                                                            <li class="dropdown"><a class="dropdown-toggle" href="/blog/4?class=35" title="旅行社">旅行社</a></li>
+                                                            <li class="dropdown"><a class="dropdown-toggle" href="/blog/4?class=36" title="放映室">放映室</a></li>
+                                                            <li class="dropdown"><a class="dropdown-toggle" href="/blog/4" title="全部">全部</a></li>
+                                                        </ul>
+                                                        </li>
+                                                        <li class="dropdown"><a class="dropdown-toggle" href="/store/11" title="販售點">販售點</a><ul class="dropdown-menu" role="menu">
+                                                            <li class="dropdown"><a class="dropdown-toggle" href="/store/11" title="臺灣">臺灣</a></li>
+                                                        </ul>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="language">
+                                                        <ul>
+                                                            <li class="active "><a></a></li>
+                                                            <li class="en-us"><a href="/default.aspx?Culture=en-us"></a></li>
+                                                            <li class="ja-jp"><a href="/default.aspx?Culture=ja-jp"></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </header>
+            </div>
+
+            <div class="border-bottom-a">
+
+                <div class="owl-carousel banner">
+                    <div class="overlay-container overlay-visible"><a href="http://www.10moresocks.com/product/detail/60?format=125">
+                        <div class="img" style="background-image: url('AdvBannerPicture23.jpg');"></div>
+                    </a></div>
+                    <div class="overlay-container overlay-visible"><a href="http://www.10moresocks.com/product/detail/59?format=124">
+                        <div class="img" style="background-image: url('AdvBannerPicture22.jpg');"></div>
+                    </a></div>
+                    <div class="overlay-container overlay-visible">
+                        <div class="img" style="background-image: url('AdvBannerPicture20.jpg');"></div>
+                    </div>
+                    <div class="overlay-container overlay-visible">
+                        <div class="img" style="background-image: url('AdvBannerPicture26.jpg');"></div>
+                    </div>
+                    <div class="overlay-container overlay-visible">
+                        <div class="img" style="background-image: url('AdvBannerPicture24.jpg');"></div>
+                    </div>
+                    <div class="overlay-container overlay-visible">
+                        <div class="img" style="background-image: url('AdvBannerPicture25.jpg');"></div>
+                    </div>
+                    <div class="overlay-container overlay-visible">
+                        <div class="img" style="background-image: url('AdvBannerPicture27.jpg');"></div>
+                    </div>
+                    <div class="overlay-container overlay-visible">
+                        <div class="img" style="background-image: url('AdvBannerPicture28.jpg');"></div>
+                    </div>
+                    <div class="overlay-container overlay-visible">
+                        <div class="img" style="background-image: url('AdvBannerPicture29.jpg');"></div>
+                    </div>
+                    <div class="overlay-container overlay-visible">
+                        <div class="img" style="background-image: url('AdvBannerPicture30.jpg');"></div>
+                    </div>
+                </div>
+                <div class="banner-dots hidden-xs">
+                    <img src="IMG/banner_dot_1.png" usemap="#dots" />
+                    <map name="dots">
+                        <area shape="circle" coords="114,10,20" href="javascript:return false" data-text="1" data-id="1">
+                        <area shape="circle" coords="82,134,20" href="javascript:return false" data-text="2" data-id="2">
+                        <area shape="circle" coords="87,200,20" href="javascript:return false" data-text="3" data-id="3">
+                        <area shape="circle" coords="19,412,20" href="javascript:return false" data-text="4" data-id="4">
+                        <area shape="circle" coords="59,509,20" href="javascript:return false" data-text="5" data-id="5">
+                        <area shape="circle" coords="82,547,20" href="javascript:return false" data-text="6" data-id="6">
+                        <area shape="circle" coords="126,697,20" href="javascript:return false" data-text="7" data-id="7">
+                        <area shape="circle" coords="179,770,20" href="javascript:return false" data-text="8" data-id="8">
+                        <area shape="circle" coords="167,803,20" href="javascript:return false" data-text="9" data-id="9">
+                        <area shape="circle" coords="166,855,20" href="javascript:return false" data-text="+10" data-id="10">
+                    </map>
+                    <div class="active"></div>
+                    <div class="num"></div>
+                </div>
+
+
+
+                <footer id="footer" class="footer clearfix">
+                    <div class="footer-inner">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <div class="row">
+                                        <div class="col-md-5 col-xs-12">
+                                            <div>
+                                                <img src="IMG/company.png" />
+                                                <div class="address">
+                                                    臺北市士林區福林路329巷1弄12號5樓
+                                                </div>
+                                                <div class="phone">
+                                                    +886 2 2832 2710
+                                                </div>
+                                                <div class="email">
+                                                    <a href="mailto:nihow@10moresocks.com">nihow@10moresocks.com</a>
+                                                </div>
+                                                <div class="time">
+                                                    10:00 a.m. - 6:00 p.m.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7 col-xs-12 text-right">
+                                            <div class="newsletter">
+                                                <div id="ctl00_Bottom_UpdatePanelNewLetter">
+
+                                                    <ul>
+                                                        <li>
+                                                            <input name="ctl00$Bottom$TextBoxEmail" type="text" id="ctl00_Bottom_TextBoxEmail" class="form-control" placeholder="oooooo@10moresocks.com" />
+                                                        </li>
+                                                        <li>
+                                                            <a id="ctl00_Bottom_LinkButtonSubmit" href="javascript:__doPostBack(&#39;ctl00$Bottom$LinkButtonSubmit&#39;,&#39;&#39;)">訂閱</a>
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+                                            <div class="link">
+                                                <ul class="hidden-xs">
+                                                    <li>
+                                                        <a class="fb" target="_blank" href="https://www.facebook.com/10moresocks/">
+                                                            <img src="IMG/facebook.png" /></a></li>
+                                                    <li>
+                                                        <a class="ig" target="_blank" href="https://www.instagram.com/10moresocks/">
+                                                            <img src="IMG/Instagram.png" /></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-8 col-sm-12">
+                                <div class="copyright">c 2017  +10 All Rights Reserved<a href="http://10moresocks.efi.twbbs.org/Setup/AdmLogin.aspx">.</a></div>
+                            </div>
+                            <div class="col-xs-4">
+                                <ul class="mobile-link visible-xs">
+                                    <li>
+                                        <a class="fb" target="_blank" href="https://www.facebook.com/10moresocks/">
+                                            <img src="IMG/facebook.png" /></a></li>
+                                    <li>
+                                        <a class="ig" target="_blank" href="https://www.instagram.com/10moresocks/">
+                                            <img src="IMG/Instagram.png" /></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+        </div>
+        <div class="shopcart-bg transition-bg"></div>
+        <div id="shopcart" class="shopcart right-panel closed">
+            <div class="trigger closed">
+                <img src="IMG/shopcart.png" />
+                <span class="cart-count default-bg">1</span>
+            </div>
+            <div class="log">
+                您好，<a href="/user/feature">系統人員</a>
+            </div>
+            <div class="feature">
+                <a href="/contents/16">商店說明</a>
+            </div>
+            <div class="mobile-scroll">
+                <div class="clearfix body customScrollbar">
+                    <div class="orders">
+                        <div class="row cell">
+                            <div class="col-xs-3 img">
+                                <a href="/product/detail/3?format=3">
+                                    <img src="/ProductPicture.ashx?ID=51&Width=100&Height=150&ReSize=縮至範圍"></a>
+                            </div>
+                            <div class="col-xs-9 data">
+                                <div class="del">
+                                    <a href="javascript:del_cart(0)"><i class="fa fa-close"></i></a>
+                                </div>
+                                <div class="name"><a href="/product/detail/3?format=3">時間</a></div>
+                                <div class="format">光</div>
+                                <div class="item"></div>
+                                <div class="row">
+                                    <div class="col-sm-8 num">
+                                        數量
+                                    <input class="num-spinner" type="text" value="1" />
+                                    </div>
+                                    <div class="col-sm-4 price">
+                                        <div class="oprice">230</div>
+                                        <div class="sprice">220</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tools">
+                    <div class="totals">
+                    </div>
+                    <div>
+
+                        <a id="ctl00_HyperLinkResect" href="shop/shopcart">結帳</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="right-tab closed">
+            <ul class="tab">
+            </ul>
+            <div class="clearfix body">
+            </div>
+        </div>
+
+
+        <button class="navbar-toggle" type="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div class="nav-mobile hidden-sm hidden-md hidden-lg">
+            <div class="container">
+                <div class="logo">
+                    <a href="/">
+                        <img src="IMG/logo.png" class="center-block" /></a>
+                </div>
+                <div class="menu">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown"><a class="dropdown-toggle" href="/list/1" title="關於">關於</a></li>
+                        <li class="dropdown"><a class="dropdown-toggle" href="/product" title="商店">商店</a></li>
+                        <li class="dropdown"><a class="dropdown-toggle" href="/series/3" title="系列">系列</a></li>
+                        <li class="dropdown"><a class="dropdown-toggle" href="/blog/4" title="日誌">日誌</a></li>
+                        <li class="dropdown"><a class="dropdown-toggle" href="/store/11" title="販售點">販售點</a></li>
+                    </ul>
+                </div>
+                <div id="Div1">
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="產品搜尋">
+                        <i class="icon-search form-control-feedback"></i>
+                    </div>
+                </div>
+                <div class="language">
+                    <ul>
+                        <li class=""><span></span></li>
+                        <li class="en-us"><a href="/default.aspx?Culture=en-us"></a></li>
+                        <li class="ja-jp"><a href="/default.aspx?Culture=ja-jp"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="Java/jquery-1.11.3.js"></script>
+        <script src="Java/jquery.validate.js"></script>
+        <script src="Java/bootstrap.js"></script>
+        <script src="Java/bootstrap-datepicker.js"></script>
+        <script src="Java/bootstrap-datepicker.zh-TW.js"></script>
+        <script src="Java/bootstrap-notify.js"></script>
+        <script src="Java/jquery.actual.js"></script>
+        <script src="Java/jquery.magnific-popup.js"></script>
+        <script src="Java/jquery.waypoints.js"></script>
+        <script src="Java/jquery.countTo.js"></script>
+        <script src="Java/jquery.parallax-1.1.3.js"></script>
+        <script src="Java/jquery.lazyload.js"></script>
+        <script src="Java/jquery.cookie.js"></script>
+        <script src="Java/jquery.browser.js"></script>
+        <script src="Java/jquery.vide.js"></script>
+        <script src="Java/jquery.mCustomScrollbar.js"></script>
+        <script src="Java/modernizr.js"></script>
+        <script src="Java/isotope.pkgd.js"></script>
+        <script src="Java/morphext.js"></script>
+        <script src="Java/owl.carousel.js"></script>
+        <script src="Java/owl.carousel.zoom.js"></script>
+        <script src="Java/SmoothScroll.js"></script>
+        <script src="Java/wow.js"></script>
+        <script src="Java/photoswipe.js"></script>
+        <script src="Java/photoswipe-ui-default.js"></script>
+        <script src="Java/jquery.themepunch.revolution.js"></script>
+        <script src="Java/jquery.themepunch.tools.js"></script>
+        <script src="Java/jquery.numSpinner.js"></script>
+        <script src="Java/jquery.shopcart.js"></script>
+        <script src="Java/template.js"></script>
+        <script src="Java/default.js"></script>
+
+
+
+        <script src="Java/jquery.rwdImageMaps.js"></script>
+        <script>
+            $(function () {
+
+                //橫幅廣告
+                var $imgUseMap = $('img[usemap]'), $owlCarouselBanner = $(".owl-carousel.banner"),
+                    $dots = $(".banner-dots"), $dotsImg = $(".banner-dots img"),
+                    $dotsNum = $(".banner-dots .num"),
+                    $dotsActive = $(".banner-dots .active"),
+                    $dotsArea = $(".banner-dots map area");
+
+                $imgUseMap.rwdImageMaps();
+
+                $owlCarouselBanner.owlCarousel({
+                    items: 1, loop: true, nav: true, dots: false, animateOut: 'fadeOut',
+                    autoplay: true
+                    //autoplayHoverPause: true
+                    //autoplayTimeout: 1000
+                });
+                $owlCarouselBanner.on('changed.owl.carousel', function (event) {
+                    var current = (event.item.index + 1) - event.relatedTarget._clones.length / 2;
+                    var allItems = event.item.count;
+                    if (current > allItems) { current = (current % allItems); }
+                    activeDots(current - 1);
+                });
+
+                $dotsArea.click(function () {
+                    activeDots($(this).index())
+                    $owlCarouselBanner.trigger('to.owl.carousel', $(this).index())
+                })
+
+                $dotsArea.hover(function () {
+                    var $this = $(this);
+                    var position = $this.attr('coords').split(',');
+                    var x = parseInt(position[0]) - $dotsNum.width() - 10;
+                    var y = parseInt(position[1]) - $dotsNum.height() + 5;
+                    $dotsNum.html($this.data("text"))
+                    $dotsNum.css({ "left": x, "top": y })
+                }, function () {
+                    $dotsNum.html("")
+                })
+
+                owlCarouselFullHeight();
+
+                //處理高度滿版
+                var owlCarouselFullHeight_Timer
+                $(window).resize(function () {
+                    clearTimeout(owlCarouselFullHeight_Timer);
+                    owlCarouselFullHeight_Timer = setTimeout(owlCarouselFullHeight, 500);
+                })
+                function owlCarouselFullHeight() {
+                    var height = $(window).height() - $owlCarouselBanner.position().top;
+                    $owlCarouselBanner.find(".owl-item").css({ "height": height })
+                    $dots.css({ "top": $owlCarouselBanner.offset().top + height * 0.1, "height": height * 0.8 })
+                    $imgUseMap.trigger('resize');
+                }
+
+                function activeDots(index) {
+                    var $this = $dotsArea.eq(index);
+                    $dotsImg.attr("src", "IMG/banner_dot_" + $this.data("id") + ".png")
+                    var position = $this.attr('coords').split(',');
+                    var x = parseInt(position[0]) - $dotsActive.width() - 10;
+                    var y = parseInt(position[1]) - $dotsActive.height() + 5;
+                    $dotsActive.html($this.data("text"))
+                    $dotsActive.css({ "left": x, "top": y })
+                }
+
+            });
+        </script>
+
+
+
+        <script>
+            var advPopupMaxId = 0;
+            var advPopupItem = [];
+        </script>
+        <script>
+            $(function () {
+                if ($.cookie("adv_popup_read_id") == null) {
+                    showAdvPop();
+                    //$.cookie("adv_popup_read_id", advPopupMaxId);
+                } else {
+                    if (advPopupMaxId > $.cookie("adv_popup_read_id")) {
+                        showAdvPop();
+                        //$.cookie("adv_popup_read_id", advPopupMaxId);
+                    }
+                }
+            })
+
+            function showAdvPop() {
+                if (advPopupItem != null && advPopupItem.length > 0) {
+                    $(window).load(function () {
+                        var $advPopup = $(".adv-popup");
+                        $advPopup.each(function () {
+                            var $this = $(this);
+                            $this.css({ "margin-left": -$this.actual("outerWidth") / 2, "margin-top": -$this.actual("outerHeight") / 2 });
+                        });
+                        $.magnificPopup.open({
+                            items: advPopupItem,
+                            gallery: { enabled: true }
+                        }, 0);
+                    });
+                }
+            }
+
+        </script>
+
+
+
+    </form>
+    <div id='app'></div>
 </body>
 </html>

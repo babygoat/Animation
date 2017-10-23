@@ -36,7 +36,7 @@ module.exports = {
     'babel-polyfill','./src/index.js'
   ],
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '10moresocks'),
     filename: jsOutputDir+'[name].bundle.js',
     publicPath:'/'
   },
@@ -100,6 +100,7 @@ module.exports = {
     inline: true,
     port: 8008,
     open: true,
+    contentBase: '10moresocks',
   },
   plugins: [
     ExtractCssTextPlugin,
