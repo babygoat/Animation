@@ -3,14 +3,17 @@
 import {assetOutputDir} from 'Root/path.config.js';
 import assert from '../assert.js';
 
-const KeyRange = 2;
+//const KeyRange = 2;
 
 //const Keys = Array.from(Array(KeyRange).keys()).map((i) => String.fromCharCode(97 + i));
-const Keys = ['a','b'];
+const Keys = ['a','b','0'];
+
+const KeyRange = Keys.length;
 
 const KeyAnimationUrls = {
   'a': [assetOutputDir+'animation/test.json'],
   'b': [assetOutputDir+'animation/data.json'],
+  '0': [assetOutputDir+'animation/Inuit.json'],
 }
 /*
 const KeyAnimation = {
@@ -34,6 +37,7 @@ assert( Object.keys(KeyAnimationUrls).length == KeyRange, 'Mismatch between KeyR
 const KeyMusicUrls = {
   'a': assetOutputDir+'musics/IntoUncertainty.mp3',
   'b': assetOutputDir+'musics/MilesToGo.mp3',
+  '0': assetOutputDir+'musics/Inuit.mp3',
 /*  'c': './assets/musics/TakeItSlow.mp3',
   'd': './assets/musics/IntoUncertainty.mp3',
   'e': './assets/musics/MilesToGo.mp3',
