@@ -77,12 +77,15 @@ export default class ModalControl extends React.Component {
   render() {
     const { open, loaded } = this.state;
 
+    const overlayStyle = { zIndex: 1200}
+
     const ModelOptions = {
       open: open,
       onClose: this.onCloseModal,
       little: true,
       closeOnOverlayClick: false,
       modalStyle: this.state.inlineStyle,
+      overlayStyle: overlayStyle,
       showCloseIcon: loaded,
       closeIconClassName: styles.closeIcon,
     };
