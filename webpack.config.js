@@ -4,9 +4,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const jsOutputDir = require('./path.config.js').jsOutputDir;
-const cssOutputDir = require('./path.config.js').cssOutputDir;
-const assetOutputDir = require('./path.config.js').assetOutputDir;
+const jsDir = require('./path.config.js').jsDir;
+const cssDir = require('./path.config.js').cssDir;
+const assetDir = require('./path.config.js').assetDir;
+const musicDir = require('./path.config.js').musicDir;
+const animationDir = require('./path.config.js').animationDir;
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: `${__dirname}/src/index.html`,
@@ -18,11 +20,11 @@ const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 });
 
 const CopyWebpackPluginConfig = new CopyWebpackPlugin([
-  {from: 'src/assets/musics', to: assetOutputDir+'musics'},
-  {from: 'src/assets/animation', to: assetOutputDir+'animation'}
+  {from: 'src/assets/music', to: musicDir},
+  {from: 'src/assets/animation', to: animationDir}
 ]);
 
-const ExtractCssTextPlugin = new ExtractTextPlugin(cssOutputDir+'[name].css');
+const ExtractCssTextPlugin = new ExtractTextPlugin(cssDir+'[name].css');
 
 // entry 為進入點，output 為進行完 eslint、babel loader 轉譯後的檔案位置
 module.exports = {
@@ -37,7 +39,7 @@ module.exports = {
   ],
   output: {
     path: path.resolve(__dirname, '10moresocks'),
-    filename: jsOutputDir+'[name].bundle.js',
+    filename: jsDir+'[name].bundle.js',
     publicPath:'/'
   },
   module: {
@@ -50,7 +52,7 @@ module.exports = {
           options: {
             limit: 10000,
             mimetype: 'image/gif',
-            name: assetOutputDir+'[hash:8].[ext]'
+            name: assetDir+'[hash:8].[ext]'
           }
         }],
       },

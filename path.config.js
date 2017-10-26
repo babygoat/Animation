@@ -1,9 +1,13 @@
-const jsOutputDir = 'file/js/';
-const cssOutputDir = 'file/css/';
-const assetOutputDir = 'file/assets/';
+const jsDir = 'file/js/';
+const cssDir = 'file/css/';
+const assetDir = 'file/assets/';
+const animationDir = assetDir + 'animation/';
+const musicDir = assetDir + 'music/';
 
 module.exports = {
-  jsOutputDir,
-  cssOutputDir,
-  assetOutputDir
+  jsDir,
+  cssDir,
+  assetDir,
+  animationDir,
+  musicDir
 }

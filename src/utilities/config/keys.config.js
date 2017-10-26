@@ -1,20 +1,25 @@
 //import * as animationData from '../../assets/test.json';
 //import * as animationData1 from '../../assets/data.json';
-import {assetOutputDir} from 'Root/path.config.js';
+import {animationDir, musicDir} from 'Root/path.config.js';
 import assert from '../assert.js';
 
 //const KeyRange = 2;
 
 //const Keys = Array.from(Array(KeyRange).keys()).map((i) => String.fromCharCode(97 + i));
-const Keys = ['a','b','0'];
+const Keys = ['a','b','0','1'];
 
 const KeyRange = Keys.length;
 
 const KeyAnimationUrls = {
-  'a': [assetOutputDir+'animation/test.json'],
-  'b': [assetOutputDir+'animation/data.json'],
-  '0': [assetOutputDir+'animation/Inuit.json'],
+  'a': 'test.json',
+  'b': 'data.json',
+  '0': 'Inuit.json',
+  '1': 'Calypso.json',
 }
+
+Object.keys(KeyAnimationUrls).map( (key) =>{
+  KeyAnimationUrls[key] = animationDir + KeyAnimationUrls[key];
+});
 /*
 const KeyAnimation = {
   'a': [animationData],
@@ -35,9 +40,10 @@ const KeyAnimation = {
 assert( Object.keys(KeyAnimationUrls).length == KeyRange, 'Mismatch between KeyRange and Number of Key Animation definition!' );
 
 const KeyMusicUrls = {
-  'a': assetOutputDir+'musics/IntoUncertainty.mp3',
-  'b': assetOutputDir+'musics/MilesToGo.mp3',
-  '0': assetOutputDir+'musics/Inuit.mp3',
+  'a': 'IntoUncertainty.mp3',
+  'b': 'MilesToGo.mp3',
+  '0': 'Inuit.mp3',
+  '1': 'Calypso.mp3',
 /*  'c': './assets/musics/TakeItSlow.mp3',
   'd': './assets/musics/IntoUncertainty.mp3',
   'e': './assets/musics/MilesToGo.mp3',
@@ -50,7 +56,9 @@ const KeyMusicUrls = {
   'l': './assets/musics/TakeItSlow.mp3',
   'm': './assets/musics/IntoUncertainty.mp3',
 */};
-
+Object.keys(KeyMusicUrls).map( (key) =>{
+  KeyMusicUrls[key] = musicDir + KeyMusicUrls[key];
+});
 assert( Object.keys(KeyMusicUrls).length == KeyRange, 'Mismatch between KeyRange and Number of Key Audio Url definitions!' );
 
 export {

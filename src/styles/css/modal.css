@@ -1,3 +1,9 @@
 .closeIcon{
   z-index: 9999;
 }
+
+.fallback{
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+}

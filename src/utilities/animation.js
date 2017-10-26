@@ -26,21 +26,22 @@ export default function Animation( containerSet, notifyParentComplete ) {
       }
     };
 
-    Object.keys(animationArr).map((key) => (
-      animationArr[key].forEach((animationUrl,index,array) => {
-        options = {
-          ...options,
-          container: refContainerSet[key],
-          path: animationUrl,
-          name: key,
-        };
+    Object.keys(animationArr).map((key) => {
+      let animationUrl = animationArr[key]
 
-        let animItem = bodymovin.registerAnimation(refContainerSet[key],null);
-        animItem.setParams(options);
-        animItem.addEventListener('complete',onComplete);
-        KeyAnimationHandlers[key] = animItem;
-      })
-    ));
+      options = {
+        ...options,
+        container: refContainerSet[key],
+        path: animationUrl,
+        name: key,
+      }
+
+      let animItem = bodymovin.registerAnimation(refContainerSet[key],null);
+      animItem.setParams(options);
+      animItem.addEventListener('complete',onComplete);
+      KeyAnimationHandlers[key] = animItem;
+      }
+    );
   }
 
   const updatePlayAnimation = (nextId) => {
