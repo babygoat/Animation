@@ -1,6 +1,6 @@
-const jsDir = 'file/js/';
-const cssDir = 'file/css/';
-const assetDir = 'file/assets/';
+const jsDir = 'files/js/';
+const cssDir = 'files/css/';
+const assetDir = 'files/assets/';
 const animationDir = assetDir + 'animation/';
 const musicDir = assetDir + 'music/';
 
