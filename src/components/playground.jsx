@@ -22,11 +22,13 @@ export default class PlayGround extends React.Component {
     this.initMusics = this.initMusics.bind(this);
     this.keyHandler = this.keyHandler.bind(this);
     this.onComplete = this.onComplete.bind(this);
+    this.onInterrupt = this.onInterrupt.bind(this);
     this.onMusicLoaded = this.onMusicLoaded.bind(this);
     this.onLoad = props.onLoad;
     this.playAnimation = this.playAnimation.bind(this);
     this.transitionend = this.transitionend.bind(this);
     this.idleDetect = this.idleDetect.bind(this);
+    this.updateAnimState = this.updateAnimState.bind(this);
 
     this.timer = new Timer(this.idleDetect, IdleTime);
     this.containerSet = {};
@@ -67,12 +69,12 @@ export default class PlayGround extends React.Component {
   }
 
   onComplete(id) {
-    const { animStateSet } = this.state;
-    animStateSet[id] = 'animExit';
-    this.setState({
-      animStateSet,
-    });
+    this.updateAnimState(id, 'animExit');
     this.timer.start();
+  }
+
+  onInterrupt(id) {
+    this.updateAnimState(id, 'animExit');
   }
 
   onMusicLoaded() {
@@ -82,31 +84,12 @@ export default class PlayGround extends React.Component {
     });
   }
 
-  playAnimation(id) {
-    this.timer.stop();
-
-    this.animationHandler.update(id);
-
-    const { animStateSet } = this.state;
-    animStateSet[id] = 'animEnter';
-    this.setState({
-      animStateSet,
-      isIdle: false,
-    });
-  }
-
-  transitionend(event) {
-    const { animStateSet } = this.state;
-    const { id } = event.target;
-
-    animStateSet[id] = 'idle';
-    this.setState({
-      animStateSet,
-    });
-  }
-
   initAnimations() {
-    this.animationHandler = Animation(this.containerSet, this.onComplete);
+    this.animationHandler = Animation(
+      this.containerSet,
+      this.onComplete,
+      this.onInterrupt,
+    );
 
     Object.keys(this.containerSet).forEach((key) => {
       this.containerSet[key].addEventListener('transitionend', this.transitionEnd);
@@ -136,6 +119,34 @@ export default class PlayGround extends React.Component {
 
     this.musicHandler.play(handler.shortcut);
     this.playAnimation(handler.shortcut);
+  }
+
+  playAnimation(id) {
+    this.timer.stop();
+
+    this.animationHandler.update(id);
+    this.updateAnimState(id, 'animEnter');
+
+    if (this.state.isIdle) {
+      this.setState({
+        isIdle: false,
+      });
+    }
+  }
+
+  transitionend(event) {
+    const { id } = event.target;
+
+    this.updateAnimState(id, 'idle');
+  }
+
+  updateAnimState(id, state) {
+    const { animStateSet } = this.state;
+
+    animStateSet[id] = state;
+    this.setState({
+      animStateSet,
+    });
   }
 
   render() {

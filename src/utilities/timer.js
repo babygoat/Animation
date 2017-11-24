@@ -1,18 +1,18 @@
 export default function Timer(fn, t) {
-  let timerObj;
+  let timerObj = null;
 
-  const stop = function stop() {
+  const stop = function stopTimer() {
     if (timerObj) {
       clearInterval(timerObj);
       timerObj = null;
     }
   };
 
-  const start = function start() {
+  const start = function startTimer() {
     if (!timerObj) {
-      this.stop();
-      timerObj = setInterval(fn, t);
+      stop();
     }
+    timerObj = setInterval(fn, t);
   };
 
   return {

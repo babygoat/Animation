@@ -1,7 +1,7 @@
 import bodymovin from 'bodymovin/build/player/bodymovin.min';
 import { KeyAnimationUrls } from '../utilities/config/keys.config';
 
-export default function Animation(containerSet, notifyParentComplete) {
+export default function Animation(containerSet, notifyParentComplete, notifyParentInterrupt) {
   const KeyAnimationHandlers = {};
   let playId = '';
 
@@ -48,9 +48,9 @@ export default function Animation(containerSet, notifyParentComplete) {
       if (playId === nextId) {
         nextAnimItem.goToAndPlay(0, true, nextAnimItem.name);
       } else {
-        const curAnimItem = KeyAnimationHandlers[playId];
-        curAnimItem.stop();
-        onComplete();
+        const currentAnimItem = KeyAnimationHandlers[playId];
+        currentAnimItem.stop();
+        notifyParentInterrupt(playId);
         nextAnimItem.play();
       }
     } else {
