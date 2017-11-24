@@ -1,14 +1,16 @@
-var path = require( 'path' );
+const path = require('path');
 // 讓你可以動態插入 bundle 好的 .js 檔到 .index.html
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const jsDir = require('./path.config.js').jsDir;
-const cssDir = require('./path.config.js').cssDir;
-const assetDir = require('./path.config.js').assetDir;
-const musicDir = require('./path.config.js').musicDir;
-const animationDir = require('./path.config.js').animationDir;
+const {
+  jsDir,
+  cssDir,
+  assetDir,
+  musicDir,
+  animationDir,
+} = require('./path.config.js');
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: `${__dirname}/src/index.html`,
@@ -20,27 +22,30 @@ const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 });
 
 const CopyWebpackPluginConfig = new CopyWebpackPlugin([
-  {from: 'src/assets/music', to: musicDir},
-  {from: 'src/assets/animation', to: animationDir}
+  { from: 'src/assets/music', to: musicDir },
+  { from: 'src/assets/animation', to: animationDir },
 ]);
 
-const ExtractCssTextPlugin = new ExtractTextPlugin(cssDir+'[name].css');
+const ExtractCssTextPlugin = new ExtractTextPlugin(`${cssDir}[name].css`);
 
-// entry 為進入點，output 為進行完 eslint、babel loader 轉譯後的檔案位置
 module.exports = {
   resolve: {
+    extensions: [
+      '.js',
+      '.jsx',
+    ],
     alias: {
-      Assets: path.resolve(__dirname,'src/assets'),
+      Assets: path.resolve(__dirname, 'src/assets'),
       Root: process.cwd(),
-    }
+    },
   },
   entry: [
-    'babel-polyfill','./src/index.js'
+    'babel-polyfill', './src/index.jsx',
   ],
   output: {
     path: path.resolve(__dirname, '10moresocks'),
-    filename: jsDir+'[name].bundle.js',
-    publicPath:'/'
+    filename: `${jsDir}[name].bundle.js`,
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -52,8 +57,8 @@ module.exports = {
           options: {
             limit: 10000,
             mimetype: 'image/gif',
-            name: assetDir+'[hash:8].[ext]'
-          }
+            name: `${assetDir}[hash:8].[ext]`,
+          },
         }],
       },
       {
@@ -69,33 +74,29 @@ module.exports = {
                 camelCase: true,
               },
             },
-            'postcss-loader'
-          ]
+            'postcss-loader',
+          ],
         }),
       },
       {
-        enforce: 'pre',
         test: /\.jsx$|\.js$/,
-        loader: 'eslint-loader',
-        include: `${__dirname}/src`,
-        exclude: /bundle\.js$/
-      },
-      {
-        test: /\.js$/,
         exclude: [/node_modules/],
         use: [{
           loader: 'babel-loader',
           options: {
             presets: [
-              ['es2015', {modules: false}],
+              ['es2015', { modules: false }],
               'react',
-              'stage-0'
+              'stage-0',
             ],
-          }
-        }
-      ]
-      }
-    ]
+            plugins: [
+              'transform-es2015-shorthand-properties',
+            ],
+          },
+        },
+        ],
+      },
+    ],
   },
   // 啟動開發測試用 server 設定（不能用在 production）
   devServer: {
@@ -107,6 +108,6 @@ module.exports = {
   plugins: [
     ExtractCssTextPlugin,
     HTMLWebpackPluginConfig,
-    CopyWebpackPluginConfig
+    CopyWebpackPluginConfig,
   ],
 };

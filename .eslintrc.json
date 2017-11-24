@@ -1,0 +1,35 @@
+{
+  "extends": [
+    "airbnb"
+  ],
+  "plugins": [
+    "react",
+    "compat"
+  ],
+  "rules": {
+    "semi": ["error","always"],
+    "compat/compat": "error",
+    "arrow-parens": ["error", "always"],
+    "yoda": ["error", "always"],
+    "react/no-typos": "error"
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.config.js"
+      }
+    }
+  },
+  "env": {
+    "browser": true
+  },
+  "overrides": [{
+    "files": ["*.config.js"],
+    "rules": {
+      "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+    },
+    "env": {
+      "node": true
+    }
+  }]
+}

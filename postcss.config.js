@@ -8,6 +8,6 @@ const AUTOPREFIXER_BROWSERS = [
 
 module.exports = {
   plugins: [
-    require('autoprefixer')({broswers: AUTOPREFIXER_BROWSERS})
-  ]
-}
+    require('autoprefixer')({ broswers: AUTOPREFIXER_BROWSERS }),
+  ],
+};

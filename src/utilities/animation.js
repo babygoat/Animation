@@ -1,19 +1,17 @@
-'use strict';
-import bodymovin from 'bodymovin/build/player/bodymovin.min.js';
-import {KeyAnimationUrls} from '../utilities/config/keys.config.js';
+import bodymovin from 'bodymovin/build/player/bodymovin.min';
+import { KeyAnimationUrls } from '../utilities/config/keys.config';
 
-export default function Animation( containerSet, notifyParentComplete ) {
+export default function Animation(containerSet, notifyParentComplete) {
   const KeyAnimationHandlers = {};
-  const refContainerSet = containerSet;
-  let  playId = '';
+  let playId = '';
 
-  const onComplete = () => {
+  const onComplete = function onCompleteHandler() {
     KeyAnimationHandlers[playId].stop();
     notifyParentComplete(playId);
     playId = '';
-  }
+  };
 
-  const initAnimationItems = () => {
+  const initItems = function initAnimationItems() {
     const animationArr = KeyAnimationUrls;
     const refContainerSet = containerSet;
 
@@ -22,60 +20,57 @@ export default function Animation( containerSet, notifyParentComplete ) {
       loop: false,
       autoplay: false,
       rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice'
-      }
+        preserveAspectRatio: 'xMidYMid slice',
+      },
     };
 
-    Object.keys(animationArr).map((key) => {
-      let animationUrl = animationArr[key]
+    Object.keys(animationArr).forEach((key) => {
+      const animationUrl = animationArr[key];
 
       options = {
         ...options,
         container: refContainerSet[key],
         path: animationUrl,
         name: key,
-      }
+      };
 
-      let animItem = bodymovin.registerAnimation(refContainerSet[key],null);
+      const animItem = bodymovin.registerAnimation(refContainerSet[key], null);
       animItem.setParams(options);
-      animItem.addEventListener('complete',onComplete);
+      animItem.addEventListener('complete', onComplete);
       KeyAnimationHandlers[key] = animItem;
-      }
-    );
-  }
+    });
+  };
 
-  const updatePlayAnimation = (nextId) => {
+  const update = function updatePlayAnimation(nextId) {
     const nextAnimItem = KeyAnimationHandlers[nextId];
 
-    if( playId ){
-      if(playId === nextId) {
+    if (playId) {
+      if (playId === nextId) {
         nextAnimItem.goToAndPlay(0, true, nextAnimItem.name);
-      }
-      else {
+      } else {
         const curAnimItem = KeyAnimationHandlers[playId];
         curAnimItem.stop();
         onComplete();
         nextAnimItem.play();
       }
-    }
-    else {
+    } else {
       nextAnimItem.play();
     }
 
     playId = nextId;
-  }
+  };
 
-  const destroyAnimation = () => {
-    for( let animItem of Object.values(KeyAnimationHandlers) ){
-      animItem.destroy();
-    }
-  }
+  const destroy = function destroyAnimation() {
+    Object.keys(KeyAnimationHandlers).forEach((key) => {
+      KeyAnimationHandlers[key].destory();
+    });
+  };
 
-  initAnimationItems();
+  initItems();
 
   return {
     KeyAnimationHandlers,
-    updatePlayAnimation,
-    destroyAnimation,
+    update,
+    destroy,
   };
 }

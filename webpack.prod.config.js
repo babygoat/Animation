@@ -1,17 +1,19 @@
-var path = require( 'path' );
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 // 讓你可以動態插入 bundle 好的 .js 檔到 .index.html
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-const jsDir = require('./path.config.js').jsDir;
-const cssDir = require('./path.config.js').cssDir;
-const assetDir = require('./path.config.js').assetDir;
-const musicDir = require('./path.config.js').musicDir;
-const animationDir = require('./path.config.js').animationDir;
+const {
+  jsDir,
+  cssDir,
+  assetDir,
+  musicDir,
+  animationDir,
+} = require('./path.config.js');
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
   template: `${__dirname}/src/index.html`,
@@ -23,19 +25,18 @@ const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 });
 
 const CopyWebpackPluginConfig = new CopyWebpackPlugin([
-  {from: 'src/assets/music', to: musicDir},
-  {from: 'src/assets/animation', to: animationDir}
+  { from: 'src/assets/music', to: musicDir },
+  { from: 'src/assets/animation', to: animationDir },
 ]);
 
-//extract stylesheet into a separate file
-const ExtractCssTextPlugin = new ExtractTextPlugin(cssDir+'[name].css');
+// extract stylesheet into a separate file
+const ExtractCssTextPlugin = new ExtractTextPlugin(`${cssDir}[name].css`);
 
-// entry 為進入點，output 為進行完 eslint、babel loader 轉譯後的檔案位置
 module.exports = {
   entry: {
-    app: ['./src/index.js'],
+    app: ['./src/index.jsx'],
     'vendor.bodymovin': ['bodymovin/build/player/bodymovin.min.js'],
-    vendor:[
+    vendor: [
       'babel-polyfill',
       'react',
       'react-dom',
@@ -48,14 +49,18 @@ module.exports = {
     ],
   },
   resolve: {
+    extensions: [
+      '.js',
+      '.jsx',
+    ],
     alias: {
-      Assets: path.resolve(__dirname,'src/assets'),
+      Assets: path.resolve(__dirname, 'src/assets'),
       Root: process.cwd(),
-    }
+    },
   },
   output: {
     path: path.resolve(__dirname, '10moresocks'),
-    filename: jsDir+'[name].bundle.js',
+    filename: `${jsDir}[name].bundle.js`,
     publicPath: '/',
   },
   module: {
@@ -68,8 +73,8 @@ module.exports = {
           options: {
             limit: 10000,
             mimetype: 'image/gif',
-            name: assetDir+'[hash:8].[ext]'
-          }
+            name: `${assetDir}[hash:8].[ext]`,
+          },
         }],
       },
       {
@@ -85,55 +90,51 @@ module.exports = {
                 camelCase: true,
               },
             },
-            'postcss-loader'
-          ]
+            'postcss-loader',
+          ],
         }),
       },
       {
-        enforce: 'pre',
         test: /\.jsx$|\.js$/,
-        loader: 'eslint-loader',
-        include: `${__dirname}/src`,
-        exclude: /bundle\.js$/
-      },
-      {
-        test: /\.js$/,
         exclude: [/node_modules/],
         use: [{
           loader: 'babel-loader',
           options: {
             presets: [
-              ['es2015', {modules: false}],
+              ['es2015', { modules: false }],
               'react',
-              'stage-0'
-            ]
-          }
-        }
-      ]
-      }
-    ]
+              'stage-0',
+            ],
+            plugins: [
+              'transform-es2015-shorthand-properties',
+            ],
+          },
+        },
+        ],
+      },
+    ],
   },
   plugins: [
     new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
-        reportFilename:'../tmp/report.html',
+      analyzerMode: 'static',
+      reportFilename: '../tmp/report.html',
     }),
     new webpack.optimize.CommonsChunkPlugin({
-        names: ['vendor.bodymovin','vendor.tone','vendor'],
-        minChunks: Infinity,
+      names: ['vendor.bodymovin', 'vendor.tone', 'vendor'],
+      minChunks: Infinity,
     }),
     new WebpackCleanupPlugin({
-      exclude: ['CSS/**/*','Java/**/*','IMG/**/*']
+      exclude: ['CSS/**/*', 'Java/**/*', 'IMG/**/*'],
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
         screw_ie8: true,
         drop_console: true,
-        drop_debugger: true
-      }
+        drop_debugger: true,
+      },
     }),
-    //new webpack.optimize.OccurrenceOrderPlugin(),
+    // new webpack.optimize.OccurrenceOrderPlugin(),
     ExtractCssTextPlugin,
     HTMLWebpackPluginConfig,
     CopyWebpackPluginConfig,
