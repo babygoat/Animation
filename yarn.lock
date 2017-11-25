@@ -1077,9 +1077,9 @@ body-parser@1.18.2:
     raw-body "2.3.2"
     type-is "~1.6.15"
 
-bodymovin@^4.11.0:
-  version "4.13.0"
-  resolved "https://registry.yarnpkg.com/bodymovin/-/bodymovin-4.13.0.tgz#06d97c0130e2334dccb33bea638136f88a74540b"
+bodymovin@4.12.3:
+  version "4.12.3"
+  resolved "https://registry.yarnpkg.com/bodymovin/-/bodymovin-4.12.3.tgz#c09c7fb29623088691e38c5f43ae3170f1dd199e"
 
 bonjour@^3.5.0:
   version "3.5.0"
